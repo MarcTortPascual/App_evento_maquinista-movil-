@@ -1,11 +1,16 @@
 import 'package:app_maquinista/custom_widgets/page.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app_maquinista/Events/projectos.dart';
+import 'package:app_maquinista/model/projectos.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:app_maquinista/custom_widgets/Pdfview.dart' as PDF;
 class DetallesProyectos extends StatefulWidget{
   DetallesProyectos({
     super.key,
@@ -23,17 +28,19 @@ class _DetallesProyectosState extends State<DetallesProyectos> {
   Widget build(BuildContext context) {
     return PageMaquinista(
         tittle: Text(widget.proj.titulo, style: TextStyle(color: Colors.yellow),),
+        subtittle: Text(widget.proj.autor.get_all_name(), style: TextStyle(color: Colors.grey),),
         body:
           TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Center(
                 child: PresentacionProjecto(proj: widget.proj),
               ),
               Center(
-                child:SobreElProyecto(proj: widget.proj),
+                child:PDF.PDFview(url: widget.proj.memoriaUrl),
               ),
               Center(
-                child: Text("It's sunny here"),
+                child: AutorProyecto(student: widget.proj.autor),
               ),
             ],
           ),
@@ -63,17 +70,29 @@ class PresentacionProjecto extends StatelessWidget{
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Container(
-          width: screenWidth ,
-          height: screenHeight/4,
-          child: Video(url: proj.videoUrl, autoplay: true, loop: false) ,
-        ),
+    return
+      Column(
+        children: [
+        Wrap(
+        spacing: screenWidth/3, // Espacio horizontal entre botones
+        runSpacing: screenHeight/4, // Espacio vertical en caso de wrap
 
-        Image.network(proj.imagenUrl)
-      ],
+        alignment: WrapAlignment.center,
+        children: [
+          Container(
+            width: screenWidth,
+              height: screenHeight/2,
+              child:
+                Video(url: proj.videoUrl, autoplay: true, loop: true),
+              ),
+          Container(
+
+            child: Text(proj.resumen),
+          )
+        ],
+      )]
     );
+
   }
 }
 class Video extends StatefulWidget{
@@ -138,25 +157,40 @@ class _VideoState extends State<Video>{
 
   }
 }
-class SobreElProyecto extends StatelessWidget{
-  SobreElProyecto({
+
+
+
+class AutorProyecto extends StatelessWidget{
+  AutorProyecto({
     super.key,
-    required this.proj
+    required this.student,
   });
-
-  Proyecto proj;
-  //PDFViewer memoria = PDFDocument.fromURL(proj.memoriaUrl).then({return PDFViewer(document: v);}) ;
-
-  @override
+  Estudents student;
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: [
+        Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child:  Image.network(student.photoName, width: 100, height: 100,),
+                ),
 
-    return Scaffold();
+              Text(student.get_all_name(),)
+            ],
+          )
+        ),
+        Container(
+          width: screenWidth,
+          height: (screenHeight/3)*2,
+          child: PDF.PDFview(url: student.cvLink),
+        )
 
+      ],
+    );
   }
 }
-/*class _AutorProyecto extends StatelessWidget{
-  AutorProyecto({
-    super.key
-  });
-  Widget build(BuildContext context) {}
-}*/

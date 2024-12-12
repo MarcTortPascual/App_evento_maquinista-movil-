@@ -10,7 +10,7 @@ class PageMaquinista extends StatelessWidget{
     this.initialindex,
 
     this.tabs = const PreferredSize(preferredSize: Size(0, 0), child: Scaffold()),
-    this.subtittle = const Scaffold(),
+    this.subtittle = const Text(""),
     this.extraActions = const Scaffold()
   });
   Widget tittle;

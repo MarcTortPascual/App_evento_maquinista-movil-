@@ -1,6 +1,9 @@
+import 'package:app_maquinista/model/students.dart';
+
 class Proyecto{
+  int _id;
   String _titulo;
-  String _autor;
+  Estudents _autor;
   String _zona;
   String _box;
   String _nivelEstudios;
@@ -9,9 +12,10 @@ class Proyecto{
   String _videoUrl;
   String _memoriaUrl;
   String _fotoAutorUrl;
-  String _cvUrl;
+
 
   Proyecto(
+      this._id,
       this._titulo,
       this._autor,
       this._zona,
@@ -22,13 +26,8 @@ class Proyecto{
       this._videoUrl,
       this._memoriaUrl,
       this._fotoAutorUrl,
-      this._cvUrl);
+      );
 
-  String get cvUrl => _cvUrl;
-
-  set cvUrl(String value) {
-    _cvUrl = value;
-  }
 
   String get fotoAutorUrl => _fotoAutorUrl;
 
@@ -78,9 +77,9 @@ class Proyecto{
     _zona = value;
   }
 
-  String get autor => _autor;
+  Estudents get autor => _autor;
 
-  set autor(String value) {
+  set autor(Estudents value) {
     _autor = value;
   }
 
