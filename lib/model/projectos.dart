@@ -1,91 +1,103 @@
 import 'package:app_maquinista/model/students.dart';
+import 'package:flutter/cupertino.dart';
 
 class Proyecto{
-  int _id;
-  String _titulo;
-  Estudents _autor;
-  String _zona;
-  String _box;
-  String _nivelEstudios;
-  String _resumen;
-  String _imagenUrl;
-  String _videoUrl;
-  String _memoriaUrl;
-  String _fotoAutorUrl;
+  @protected
+  int id;
+  @protected
+  String titulo;
+  @protected
+  List<Estudents> autor;
+  @protected
+  String zona;
+  @protected
+  String box;
+  @protected
+  String nivelEstudios;
+  @protected
+  String resumen;
+  @protected
+  String imagenUrl;
+  @protected
+  String videoUrl;
+  @protected
+  String memoriaUrl;
+  @protected
+  String fotoAutorUrl;
 
 
   Proyecto(
-      this._id,
-      this._titulo,
-      this._autor,
-      this._zona,
-      this._box,
-      this._nivelEstudios,
-      this._resumen,
-      this._imagenUrl,
-      this._videoUrl,
-      this._memoriaUrl,
-      this._fotoAutorUrl,
+      this.id,
+      this.titulo,
+      this.autor,
+      this.zona,
+      this.box,
+      this.nivelEstudios,
+      this.resumen,
+      this.imagenUrl,
+      this.videoUrl,
+      this.memoriaUrl,
+      this.fotoAutorUrl,
       );
 
 
-  String get fotoAutorUrl => _fotoAutorUrl;
+  String get FotoAutorUrl => fotoAutorUrl;
 
-  set fotoAutorUrl(String value) {
-    _fotoAutorUrl = value;
+  set FotoAutorUrl(String value) {
+    fotoAutorUrl = value;
   }
 
-  String get memoriaUrl => _memoriaUrl;
+  String get MemoriaUrl => memoriaUrl;
 
-  set memoriaUrl(String value) {
-    _memoriaUrl = value;
+  set MemoriaUrl(String value) {
+    memoriaUrl = value;
   }
 
-  String get videoUrl => _videoUrl;
+  String get VideoUrl => videoUrl;
 
-  set videoUrl(String value) {
-    _videoUrl = value;
+  set VideoUrl(String value) {
+    videoUrl = value;
   }
 
-  String get imagenUrl => _imagenUrl;
+  String get ImagenUrl => imagenUrl;
 
-  set imagenUrl(String value) {
-    _imagenUrl = value;
+  set ImagenUrl(String value) {
+    imagenUrl = value;
   }
 
-  String get resumen => _resumen;
+  String get Resumen => resumen;
 
-  set resumen(String value) {
-    _resumen = value;
+  set Resumen(String value) {
+    resumen = value;
   }
 
-  String get nivelEstudios => _nivelEstudios;
+  String get NivelEstudios => nivelEstudios;
 
-  set nivelEstudios(String value) {
-    _nivelEstudios = value;
+  set NivelEstudios(String value) {
+    nivelEstudios = value;
   }
 
-  String get box => _box;
+  String get Box => box;
 
-  set box(String value) {
-    _box = value;
+  set Box(String value) {
+    box = value;
   }
 
-  String get zona => _zona;
+  String get Zona => zona;
 
-  set zona(String value) {
-    _zona = value;
+  set Zona(String value) {
+    zona = value;
   }
 
-  Estudents get autor => _autor;
+  List<Estudents> get Autor => autor;
 
-  set autor(Estudents value) {
-    _autor = value;
+  set Autor(List<Estudents> value) {
+    autor = value;
   }
 
-  String get titulo => _titulo;
+  String get Titulo => titulo;
 
-  set titulo(String value) {
-      _titulo = value;
+  set Titulo(String value) {
+      titulo = value;
     }
 }
