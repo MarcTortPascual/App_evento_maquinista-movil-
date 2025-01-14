@@ -58,6 +58,7 @@ class ProyectosPage<T extends Proyecto> extends StatelessWidget{
                   subtitle:  Column(
                     children: [
                       Text(proj.Autor[0].get_all_name(),style: TextStyle(color: Color.fromARGB(255, 175, 175, 175)),textAlign: TextAlign.left,),
+                      Text(proj.NivelEstudios),
                       Image.network(proj.ImagenUrl,height: 100, width: 200,)
                     ],
                   ),

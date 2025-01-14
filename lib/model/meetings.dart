@@ -6,7 +6,7 @@ class Meetings {
   String date;
   String ubication;
   String initTime;
-  String  endTime;
+  String endTime;
   List<Speakers> speakers;
   
   Meetings(

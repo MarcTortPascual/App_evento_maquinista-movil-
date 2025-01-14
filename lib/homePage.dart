@@ -1,16 +1,28 @@
+import 'package:app_maquinista/companies_page.dart';
+import 'package:app_maquinista/map_page.dart';
 import 'package:app_maquinista/meeting_details.dart';
 import 'package:app_maquinista/meetings_page.dart';
+import 'package:app_maquinista/model/companies.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'package:app_maquinista/model/meetings.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/custom_widgets/menu_button.dart';
+import 'package:app_maquinista/model/roles.dart';
 import 'package:app_maquinista/model/speakers.dart';
 import 'package:app_maquinista/model/students.dart';
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:app_maquinista/proyectos_page.dart';
 import 'package:flutter/material.dart';
 
+import 'model/users.dart';
 
+List<Companies> companies =[
+  Companies("Comp1",User("tort","a",Role.COMPANIE),"stand 1"),
+  Companies("Comp11",User("tort1","a",Role.COMPANIE),"stand 11"),
+  Companies("Comp12",User("tort2","a",Role.COMPANIE),"stand 21"),
+  Companies("Comp13",User("tort3","a",Role.COMPANIE),"stand 31"),
+
+];
 Estudents manolo = Estudents(
   5,
   "manolo",
@@ -207,11 +219,12 @@ class Home extends StatelessWidget{
 
               ),
               MenuButton(
-                onPressed: () {
-
+                onPressed: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Companies_Page(companies: companies)))
                 },
                 icon: Icons.business_outlined,
                 text: 'Expositores',
+
 
               ),
             ],
@@ -222,8 +235,8 @@ class Home extends StatelessWidget{
             alignment: WrapAlignment.center,
             children: [
               MenuButton(
-                onPressed: () {
-
+                onPressed: () =>{
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Map_page() ))
                 },
                 icon: Icons.map,
                 text: 'Mapa',
