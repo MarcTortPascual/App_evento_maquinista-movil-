@@ -5,6 +5,7 @@ import 'package:app_maquinista/meetings_page.dart';
 import 'package:app_maquinista/model/companies.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'package:app_maquinista/model/meetings.dart';
+import 'package:app_maquinista/model/net/net_projects.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/custom_widgets/menu_button.dart';
 import 'package:app_maquinista/model/roles.dart';
@@ -16,85 +17,15 @@ import 'package:flutter/material.dart';
 
 import 'model/users.dart';
 
-List<Companies> companies =[
-  Companies("Comp1",User("tort","a",Role.COMPANIE),"stand 1"),
-  Companies("Comp11",User("tort1","a",Role.COMPANIE),"stand 11"),
-  Companies("Comp12",User("tort2","a",Role.COMPANIE),"stand 21"),
-  Companies("Comp13",User("tort3","a",Role.COMPANIE),"stand 31"),
-
-];
-Estudents manolo = Estudents(
-  5,
-  "manolo",
-  "https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf",
-  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.explicit.bing.net%2Fth%3Fid%3DOIP.awAiMS1BCAQ2xS2lcdXGlwHaHH%26pid%3DApi&f=1&ipt=1fc8c60c61b2bd74d5561b525e45110627980ac0aaac65f25d0e355135c370db&ipo=images",
-   true,
-  "jose",
-  "luis2",
-);
-Estudents manolo2 = Estudents(
-  51,
-  "manolo2",
-  "https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf",
-  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.explicit.bing.net%2Fth%3Fid%3DOIP.awAiMS1BCAQ2xS2lcdXGlwHaHH%26pid%3DApi&f=1&ipt=1fc8c60c61b2bd74d5561b525e45110627980ac0aaac65f25d0e355135c370db&ipo=images",
-  true,
-  "jj",
-  "ll",
-);
-
-List<Proyecto> projectos = [
-  Proyecto(
-      1,
-      "Frenos",
-      [manolo],
-      "_zona",
-      "1",
-      "GM Electromecánica",
-      "Electromecanica de un nissan",
-      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/52/Visa_II.ogv/Visa_II.ogv.360p.webm",
-      "https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf",
-      "_fotoAutorUrl",
-
-  ),
-  Proyecto(2,"Motor", [manolo], "_zona2", "2", "GS Automoción", "Automación de un nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Tr%C3%A1fico_-_Aguascalientes.webm/Tr%C3%A1fico_-_Aguascalientes.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl"),
-  Proyecto(3,"Embrage", [manolo,manolo2], "_zona3", "3", "GM Carrocería'", "Carroceria de un nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl"),
-  Proyecto(4,"Caroceria", [manolo,manolo,manolo2], "_zona4", "4", "GM Motocicletas", "Moticicleta nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl")
-];
-List<DinamicTest> testdinamicos = [
-  DinamicTest(
-    "12:00",
-    "13:00",
-    1,
-    "Frenos",
-    [manolo],
-    "GM Electromecánica",
-    "Electromecanica de un nissan",
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/52/Visa_II.ogv/Visa_II.ogv.360p.webm",
-    "https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf",
-    "_fotoAutorUrl",
-
-  ),
-  DinamicTest("12:00",
-      "13:00",2,"Motor", [manolo], "GS Automoción", "Automación de un nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Tr%C3%A1fico_-_Aguascalientes.webm/Tr%C3%A1fico_-_Aguascalientes.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl"),
-  DinamicTest("12:00",
-      "13:00",3,"Embrage", [manolo,manolo2],  "GM Carrocería'", "Carroceria de un nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl"),
-  DinamicTest("12:00",
-      "13:00",4,"Caroceria", [manolo,manolo,manolo2], "GM Motocicletas", "Moticicleta nissan", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.1ukVOUiiOqIqw4idjir_9wHaE7%26pid%3DApi&f=1&ipt=a7ba6b9ceb33327f3c3304c5f0d469590291dfda01c08ee71d6382660e82146d&ipo=images", "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm/Coyote_Inspects_Badger_Den_Karl_E._Mundt_National_Wildlife_Refuge_South_Dakota.webm.720p.vp9.webm", "https://moodlesg.monlau.com/pluginfile.php/53687/mod_resource/content/1/React_Tutorial.pdf", "_fotoAutorUrl")
-];
-
-Speakers josep = Speakers("josep", "mecanico", DateTime.now(), "surname1", "surname2");
-Speakers maria = Speakers("maria", "biography", DateTime.now(), "surname1", "surname2");
-Speakers josemaria = Speakers("josemaria", "biography", DateTime.now(), "surname1", "surname2");
-
-Meetings met1 = Meetings("name1", "date", "description", "endTime", "initTime", [josep,maria], "ubication");
-Meetings met2 = Meetings("name2", "date", "description", "endTime", "initTime", [josemaria,maria], "ubication");
-Meetings met3 = Meetings("name3", "date", "description", "endTime", "initTime", [josep,josemaria,maria], "ubication");
-
-var meets = [met1,met2,met3];
+List<Proyecto> projectos = [];
+List<Meetings> meets = [];
+List<DinamicTest> testdinamicos = [];
+List<Companies> companies =[];
 class Home extends StatelessWidget{
 
   Widget build(BuildContext context) {
     List<Widget> children = [];
+
     for (var meet in meets){
       children.add(
         Card(
@@ -121,32 +52,36 @@ class Home extends StatelessWidget{
         )
       ));
     }
-    for (var pro in projectos){
-      children.add(
-          Card(
-              shape:  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                side: BorderSide(
-                  color: Colors.blue,
-                  width: 2.0,
-                ),
-              ),
-              color: Colors.grey,
-              child:
-          ListTile(
-            title: Column(
-              children: [
-                Text("Proyecto: "),
-                Text(pro.titulo),
-                Text(pro.resumen)
-              ],
-            ) ,
-            onTap: () =>{
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DetallesProyectos(proj: pro)))
-            },
-          )
-      ));
-    }
+    NetProjects().get_page(1).then((onValue){
+      projectos = onValue;
+
+        for (var pro in projectos){
+          children.add(
+              Card(
+                  shape:  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    side: BorderSide(
+                      color: Colors.blue,
+                      width: 2.0,
+                    ),
+                  ),
+                  color: Colors.grey,
+                  child:
+              ListTile(
+                title: Column(
+                  children: [
+                    Text("Proyecto: "),
+                    Text(pro.titulo),
+                    Text(pro.resumen)
+                  ],
+                ) ,
+                onTap: () =>{
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetallesProyectos(proj: pro)))
+                },
+              )
+          ));
+        }
+    });
       for (var pro in testdinamicos){
         children.add(
             Card(

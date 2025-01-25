@@ -3,11 +3,9 @@ class Speakers{
   String surname1;
   String surname2;
   String biography;
-  DateTime birthdate;
   Speakers(
       this.name,
       this.biography,
-      this.birthdate,
       this.surname1,
       this.surname2,
       );

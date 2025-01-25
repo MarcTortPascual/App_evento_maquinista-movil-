@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
-class Proyecto{
+class Proyecto {
   @protected
   int id;
   @protected
@@ -26,8 +29,7 @@ class Proyecto{
   String fotoAutorUrl;
 
 
-  Proyecto(
-      this.id,
+  Proyecto(this.id,
       this.titulo,
       this.autor,
       this.zona,
@@ -37,9 +39,30 @@ class Proyecto{
       this.imagenUrl,
       this.videoUrl,
       this.memoriaUrl,
-      this.fotoAutorUrl,
-      );
+      this.fotoAutorUrl,);
 
+  factory Proyecto.fromJson (Map<String, dynamic> project, String server ){
+
+    List<Estudents> students = [];
+    var jstudents = project["students"];
+    for (
+      var s in jstudents){
+      students.add(Estudents.fromJson(s));
+    }
+    return Proyecto(
+    project["idProject"],
+    project["title"],
+    students,
+    project["ubicationName"],
+    project["ubicationName"],
+    project["specialization"],
+    project["abstract"],
+    "$server/storage/photos/$project['photoName']",
+    "$server/storage/videos/$project['videoURL']",
+    "$server/storage/pdfs/$project['pdfURL']",
+    "$server/storage/photos/$project['photoName']",
+  );
+}
 
   String get FotoAutorUrl => fotoAutorUrl;
 
