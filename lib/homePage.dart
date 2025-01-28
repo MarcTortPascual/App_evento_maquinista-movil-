@@ -52,7 +52,9 @@ class Home extends StatelessWidget{
         )
       ));
     }
-    NetProjects().get_page(1).then((onValue){
+
+    NetProjects(4).get_page(1).then((onValue){
+      print("jope: " + onValue.length.toString());
       projectos = onValue;
 
         for (var pro in projectos){

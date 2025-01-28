@@ -47,20 +47,24 @@ class Proyecto {
     var jstudents = project["students"];
     for (
       var s in jstudents){
-      students.add(Estudents.fromJson(s));
+      students.add(Estudents.fromJson(s,server));
     }
+    if (students.length  == 0){
+      students.add(Estudents(0,"","","",false,"",""));
+    }
+    print("video:  $server/storage/videos/"+project['videoURL']??"");
     return Proyecto(
     project["idProject"],
-    project["title"],
+    project["title"] ?? "",
     students,
-    project["ubicationName"],
-    project["ubicationName"],
-    project["specialization"],
-    project["abstract"],
-    "$server/storage/photos/$project['photoName']",
-    "$server/storage/videos/$project['videoURL']",
-    "$server/storage/pdfs/$project['pdfURL']",
-    "$server/storage/photos/$project['photoName']",
+    project["ubicationName"]??"",
+    project["ubicationName"]??"",
+    project["specialization"]??"",
+    project["abstract"]??"",
+    "$server/storage/photos/"+project['photoName']??"",
+    "$server/storage/videos/"+project['videoURL']??"",
+    "$server/storage/pdfs/"+project['pdfURL']??"",
+    "$server/storage/photos/"+project['photoName']??"",
   );
 }
 

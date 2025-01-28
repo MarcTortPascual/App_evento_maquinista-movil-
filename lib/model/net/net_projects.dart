@@ -13,9 +13,20 @@ class NetProjects {
   String server = "";
   String token = "";
   int available_pages = 0;
-  int limit = 3;
+  int limit = 4;
+  int current = 1;
   Iterable projects = [];
 
+
+  NetProjects(this.limit){
+    loadEnv().then((r){
+      fetch_project_page().then((p){
+        print("direcion  $server");
+        available_pages = p;
+      });
+    });
+
+  }
   // Cargar configuración
   Future<void> loadEnv() async {
     await dotenv.load(fileName:"assets/conf.env");
@@ -66,15 +77,16 @@ class NetProjects {
   }
 
   // Obtener página
-  Future<List<Proyecto>> get_page(int page) async {
+  Future<List<Proyecto>> get_page() async {
     print("h");
     await loadEnv(); // Asegúrate de cargar el entorno
-    available_pages = await fetch_project_page();
+
     print("0");
     if (page <= available_pages) {
       print("l");
-      return await fetch_projects(page); // Retorna los proyectos
-
+      List<Proyecto> page = await fetch_projects(current);
+      current ++;
+      return page;
     } else {
       print("a");
       throw Exception("Número de página fuera de rango");

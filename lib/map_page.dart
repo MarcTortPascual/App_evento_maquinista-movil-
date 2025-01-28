@@ -15,7 +15,7 @@ class Map_page extends StatelessWidget{
           height: screenHeight,
           child:
           InteractiveViewer(
-            child: Image(image: AssetImage("assets/Plano.png")),
+            child: Image(image: AssetImage("assets/img/Plano.png")),
             boundaryMargin: EdgeInsets.all(0.0), // Optional: Margin around the content
             minScale: 1.0,  // Optional: Minimum scale (zoom out)
             maxScale: 10.0,  // Optional: Maximum scale (zoom in)
