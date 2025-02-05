@@ -43,6 +43,8 @@ class Proyecto {
 
   factory Proyecto.fromJson (Map<String, dynamic> project, String server ){
 
+
+
     List<Estudents> students = [];
     var jstudents = project["students"];
     for (
@@ -52,19 +54,25 @@ class Proyecto {
     if (students.length  == 0){
       students.add(Estudents(0,"","","",false,"",""));
     }
-    print("video:  $server/storage/videos/"+project['videoURL']??"");
+
+    project.forEach((k,v){
+      if (v == null){
+        project[k] = " ";
+      }
+    });
+
     return Proyecto(
     project["idProject"],
-    project["title"] ?? "",
+    project["title"] ?? " ",
     students,
-    project["ubicationName"]??"",
-    project["ubicationName"]??"",
-    project["specialization"]??"",
-    project["abstract"]??"",
-    "$server/storage/photos/"+project['photoName']??"",
-    "$server/storage/videos/"+project['videoURL']??"",
-    "$server/storage/pdfs/"+project['pdfURL']??"",
-    "$server/storage/photos/"+project['photoName']??"",
+    project["ubicationName"]??" ",
+    project["ubicationName"]??" ",
+    project["specialization"]??" ",
+    project["abstract"]??" ",
+    "$server/storage/photos/"+(project['photoName']??" "),
+    "$server/storage/videos/"+(project['videoURL']??" "),
+    "$server/storage/pdfs/"+(project['pdfURL']??" "),
+    "$server/storage/photos/"+(project['photoName']??" "),
   );
 }
 

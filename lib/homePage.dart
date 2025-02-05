@@ -21,11 +21,21 @@ List<Proyecto> projectos = [];
 List<Meetings> meets = [];
 List<DinamicTest> testdinamicos = [];
 List<Companies> companies =[];
+
+NetProjects proj_mng =  NetProjects(7);
+
 class Home extends StatelessWidget{
+
+  Home({super.key}){
+    proj_mng.get_page(1).then((proj){
+      projectos = proj;
+    });
+  }
+
+
 
   Widget build(BuildContext context) {
     List<Widget> children = [];
-
     for (var meet in meets){
       children.add(
         Card(
@@ -53,22 +63,18 @@ class Home extends StatelessWidget{
       ));
     }
 
-    NetProjects(4).get_page(1).then((onValue){
-      print("jope: " + onValue.length.toString());
-      projectos = onValue;
-
-        for (var pro in projectos){
-          children.add(
-              Card(
-                  shape:  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(
-                      color: Colors.blue,
-                      width: 2.0,
-                    ),
-                  ),
-                  color: Colors.grey,
-                  child:
+    for (var pro in projectos){
+      children.add(
+          Card(
+              shape:  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                side: BorderSide(
+                  color: Colors.blue,
+                  width: 2.0,
+                ),
+              ),
+              color: Colors.grey,
+              child:
               ListTile(
                 title: Column(
                   children: [
@@ -78,12 +84,12 @@ class Home extends StatelessWidget{
                   ],
                 ) ,
                 onTap: () =>{
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetallesProyectos(proj: pro)))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetallesProyectos(proj: pro,)))
                 },
               )
           ));
-        }
-    });
+    }
+
       for (var pro in testdinamicos){
         children.add(
             Card(
@@ -130,13 +136,13 @@ class Home extends StatelessWidget{
             children: [
               MenuButton(
                 onPressed: () =>{
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Proyectos',projectos: projectos,)))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Proyectos',projectos: projectos,projects_mng: proj_mng,)))
                 },
                 icon: Icons.car_crash,
                 text: 'Proyectos',
               ),
               MenuButton(
-                onPressed: () =>{ Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Monlautech',projectos: testdinamicos,)))},
+                onPressed: () =>{ Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Monlautech',projectos: testdinamicos,projects_mng: proj_mng)))},
                 icon: Icons.flag_outlined,
                 text: 'Monlautech',
               )
