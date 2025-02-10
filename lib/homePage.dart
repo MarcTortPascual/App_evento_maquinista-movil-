@@ -8,9 +8,7 @@ import 'package:app_maquinista/model/meetings.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/custom_widgets/menu_button.dart';
-import 'package:app_maquinista/model/roles.dart';
-import 'package:app_maquinista/model/speakers.dart';
-import 'package:app_maquinista/model/students.dart';
+
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:app_maquinista/proyectos_page.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +18,19 @@ import 'model/users.dart';
 List<Proyecto> projectos = [];
 List<Meetings> meets = [];
 List<DinamicTest> testdinamicos = [];
+List<Proyecto> monlautech = [];
 List<Companies> companies =[];
 
-NetProjects proj_mng =  NetProjects(7);
-
+NetProjects proj_mng =  NetProjects(7,"projectsPages","projects");
+NetProjects mont_mng =  NetProjects(7,"dinamicTestPages","dynamictestings");
 class Home extends StatelessWidget{
 
   Home({super.key}){
     proj_mng.get_page(1).then((proj){
       projectos = proj;
+    });
+    mont_mng.get_page(1).then((mont){
+      monlautech = mont;
     });
   }
 
@@ -142,7 +144,7 @@ class Home extends StatelessWidget{
                 text: 'Proyectos',
               ),
               MenuButton(
-                onPressed: () =>{ Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Monlautech',projectos: testdinamicos,projects_mng: proj_mng)))},
+                onPressed: () =>{ Navigator.push(context, MaterialPageRoute(builder: (context) => ProyectosPage(name: 'Monlautech',projectos: monlautech,projects_mng: mont_mng)))},
                 icon: Icons.flag_outlined,
                 text: 'Monlautech',
               )
