@@ -28,7 +28,6 @@ class Meeting_details extends StatelessWidget{
                 Text(speaker.biography)
               ]
             ),
-
           ),
         )
 
