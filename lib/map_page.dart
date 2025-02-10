@@ -21,12 +21,8 @@ class Map_page extends StatelessWidget{
             maxScale: 10.0,  // Optional: Maximum scale (zoom in)
             scaleEnabled: true,  // Optional: Allow scaling (zooming)
 
-          )
-          ,
+          ),
         )
-
-
     );
   }
-
 }
