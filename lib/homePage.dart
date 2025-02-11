@@ -5,6 +5,7 @@ import 'package:app_maquinista/meetings_page.dart';
 import 'package:app_maquinista/model/companies.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'package:app_maquinista/model/meetings.dart';
+import 'package:app_maquinista/model/net/net_companies.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/custom_widgets/menu_button.dart';
@@ -22,7 +23,8 @@ List<Proyecto> monlautech = [];
 List<Companies> companies =[];
 
 NetProjects proj_mng =  NetProjects(7,"projectsPages","projects");
-NetProjects mont_mng =  NetProjects(7,"dinamicTestPages","dynamictestings");
+NetProjects mont_mng =  NetProjects(7,"monlautechPages","monlautech");
+NetCompanies com_mng = NetCompanies(7);
 class Home extends StatelessWidget{
 
   Home({super.key}){
@@ -31,6 +33,9 @@ class Home extends StatelessWidget{
     });
     mont_mng.get_page(1).then((mont){
       monlautech = mont;
+    });
+    com_mng.get_page(1).then((com){
+      companies = com;
     });
   }
 
