@@ -6,13 +6,17 @@ class Companies{
   String name;
   User agent;
   String stand;
+  String web;
+  String img_url;
 
   Companies(
       this.name,
       this.agent,
-      this.stand
+      this.stand,
+      this.web,
+      this.img_url
       );
   factory Companies.fromJson (Map<String, dynamic> com){
-    return Companies(com["companyName"], User(com["asistenteNombre"],"",Role.COMPANIE), "");
+    return Companies(com["companyName"], User(com["asistenteNombre"],"",Role.COMPANIE), "",com["companyWeb"],com["logo_url"]);
   }
 }

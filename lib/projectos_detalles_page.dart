@@ -190,7 +190,10 @@ class AutorProyecto extends StatelessWidget{
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(100),
-                                        child:  Image.network(student.photoName, width: 50, height: 50),
+                                        child:  Image.network(student.photoName, width: 50, height: 50,errorBuilder:
+                                            (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                            return const Icon(Icons.image,size: 50);
+                                        },)
                                       ),
 
                                       Text(student.get_all_name()),

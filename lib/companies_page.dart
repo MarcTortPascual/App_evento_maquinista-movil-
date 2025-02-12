@@ -2,6 +2,7 @@ import 'package:app_maquinista/custom_widgets/page.dart';
 import 'package:app_maquinista/model/companies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Companies_Page extends StatelessWidget{
   Companies_Page({
@@ -26,13 +27,30 @@ class Companies_Page extends StatelessWidget{
               ),
               child:
               ListTile(
-                title: Column(
+                title:
+                Row(
                   children: [
-                    Text(com.name,style: TextStyle(color: Colors.yellowAccent , fontSize: 20.0),),
-                    Text("Contacto: "+com.agent.userName),
-                      
+                    Image.network(com.img_url,width: 50, height: 50,errorBuilder:
+                        (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      return const Icon(Icons.image,size: 50);
+                    },
+
+                      ),
+                    Column(
+                      children: [
+                        Text(com.name,style: TextStyle(color: Colors.yellowAccent , fontSize: 20.0),),
+                        Text("Contacto: "+com.agent.userName),
+                        InkWell(
+                          child: Text("Web: " + com.web),
+                          onTap: () => launch(com.web) ,
+                        )
+
+                      ],
+                    ) ,
                   ],
-                ) ,
+                )
+
+
         
               )
           )

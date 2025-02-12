@@ -45,13 +45,11 @@ class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
               children: [
                 Text(test.Autor[0].get_all_name(),style: TextStyle(color: Color.fromARGB(255, 175, 175, 175)),textAlign: TextAlign.left,),
                 Text(test.initTime + " - " + test.endDate),
-                Image.network(test.ImagenUrl,height: 100, width: 200,
-                  errorBuilder:
-                      (BuildContext context, Object exception, StackTrace? stackTrace) {
-                        return const Text('Error a cargar la imagen');
-                      },
+                Image.network(test.ImagenUrl,width: 100, height: 200,errorBuilder:
+                  (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return const Icon(Icons.image,size: 50);
+                },)
 
-                )
               ],
             ),
             trailing: Icon(Icons.menu),
@@ -73,7 +71,10 @@ class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
               children: [
                 Text(proj.Autor[0].get_all_name(),style: TextStyle(color: Color.fromARGB(255, 175, 175, 175)),textAlign: TextAlign.left,),
                 Text(proj.NivelEstudios),
-                Image.network(proj.ImagenUrl,height: 100, width: 200,)
+                Image.network(proj.ImagenUrl,height: 100, width: 200,errorBuilder:
+                    (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      return const Icon(Icons.image,size: 50);
+                },)
               ],
             ),
             trailing: Icon(Icons.menu),

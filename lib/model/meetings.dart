@@ -18,4 +18,13 @@ class Meetings {
       this.speakers,
       this.ubication,
       );
+  factory Meetings.fromjson(Map<String, dynamic> meet){
+    var jspeakers = meet["speakers"];
+    List<Speakers> speakers = [];
+    for (var speak in jspeakers){
+      speakers.add(Speakers.fromjson(speak));
+    }
+
+    return Meetings(meet["presentationName"],meet["presentationDate"],meet["topic"],"","",speakers,meet["ubication"]);
+  }
 }
