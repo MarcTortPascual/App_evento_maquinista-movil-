@@ -87,7 +87,19 @@ class PresentacionProjecto extends StatelessWidget{
             width: screenWidth,
               height: screenHeight/2,
               child:
-                YouTubeVideoPlayer(videoUrl: proj.videoUrl, ),
+                  Builder(builder: (context) {
+                    print("hola" + proj.VideoUrl);
+                    //validamos que sea un video de yt
+                    if (proj.VideoUrl.contains("https://youtube.com/")){
+                      return YouTubeVideoPlayer(videoUrl: proj.videoUrl, );
+                    }else{
+                      return Icon(Icons.videocam_off, size: 150,);
+                    }
+
+                  }
+
+                  ),
+
               ),
           Container(
 

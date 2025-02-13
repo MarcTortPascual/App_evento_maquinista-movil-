@@ -70,7 +70,7 @@ class Proyecto {
     project["specialization"]??" ",
     project["abstract"]??" ",
     "$server/storage/photos/"+(project['photoName']??" "),
-    "$server/storage/videos/"+(project['videoURL']??" "),
+    project['videoURL'],
     "$server/storage/pdfs/"+(project['pdfURL']??" "),
     "$server/storage/photos/"+(project['photoName']??" "),
   );
