@@ -8,5 +8,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class NetMonalautech extends NetProjects{
+  //aqui pado los endpoints directamente
   NetMonalautech(int limit) :super(limit,"dinamicTestPages","dynamictestings");
 }

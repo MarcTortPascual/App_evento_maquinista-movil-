@@ -12,6 +12,9 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:app_maquinista/custom_widgets/Pdfview.dart' as PDF;
+import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 class DetallesProyectos<T extends Proyecto> extends StatefulWidget{
   DetallesProyectos({
     super.key,
@@ -84,7 +87,7 @@ class PresentacionProjecto extends StatelessWidget{
             width: screenWidth,
               height: screenHeight/2,
               child:
-                Video(url: proj.videoUrl, autoplay: true, loop: true),
+                YouTubeVideoPlayer(videoUrl: proj.videoUrl, ),
               ),
           Container(
 
@@ -96,66 +99,49 @@ class PresentacionProjecto extends StatelessWidget{
 
   }
 }
-class Video extends StatefulWidget{
-  Video({
-    super.key,
-    required this.url,
-    required this.autoplay,
-    required this.loop
-  });
-  String url = "";
-  bool loop = false ;
-  bool autoplay = true;
+
+
+class YouTubeVideoPlayer extends StatefulWidget {
+  final String videoUrl;
+
+  const YouTubeVideoPlayer({Key? key, required this.videoUrl}) : super(key: key);
+
   @override
-  _VideoState createState() => _VideoState();
+  _YouTubeVideoPlayerState createState() => _YouTubeVideoPlayerState();
 }
-class _VideoState extends State<Video>{
-  VideoPlayerController? controler;
-  ChewieController? cw_controler;
-  bool isPlaying = false;
 
+class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
+  late YoutubePlayerController _controller;
 
   @override
-  void dispose(){
-    controler!.dispose();
-    cw_controler!.dispose();
+  void initState() {
+    super.initState();
+    final videoId = YoutubePlayer.convertUrlToId(widget.videoUrl);
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId!,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
     super.dispose();
   }
-  void _inizializePlayer(){
-    controler  = VideoPlayerController.networkUrl(Uri.parse(widget.url));
 
-    controler!.initialize().then((_){
-      cw_controler = ChewieController(
-          videoPlayerController: controler!,
-          autoPlay: widget.autoplay,
-          looping: widget.loop
-
-      );
-      setState(() {
-        isPlaying = true;
-      });
-    });
-
-  }
   @override
   Widget build(BuildContext context) {
-    VideoPlayerController controler = VideoPlayerController.networkUrl(Uri.parse(widget.url));
-    controler.initialize();
-    cw_controler = ChewieController(
-      videoPlayerController: controler,
-      autoPlay: widget.autoplay,
-      looping: widget.loop,
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.red,
+      onReady: () {
+        debugPrint('Player is ready.');
+      },
     );
-    if (cw_controler != null){
-      return Scaffold(
-          body: Chewie(
-            controller: cw_controler!,
-          )
-      );
-    }else{
-      return Scaffold();
-    }
-
   }
 }
 
@@ -192,8 +178,8 @@ class AutorProyecto extends StatelessWidget{
                                         borderRadius: BorderRadius.circular(100),
                                         child:  Image.network(student.photoName, width: 50, height: 50,errorBuilder:
                                             (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                            return const Icon(Icons.image,size: 50);
-                                        },)
+                        return const Icon(Icons.image,size: 50);
+                        },)
                                       ),
 
                                       Text(student.get_all_name()),

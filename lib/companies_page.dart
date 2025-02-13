@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class Companies_Page extends StatelessWidget{
   Companies_Page({
     super.key,
-    required this.companies
+
   });
   List<Companies> companies;
 
