@@ -90,7 +90,7 @@ class PresentacionProjecto extends StatelessWidget{
                   Builder(builder: (context) {
                     print("hola" + proj.VideoUrl);
                     //validamos que sea un video de yt
-                    if (proj.VideoUrl.contains("https://youtube.com/")){
+                    if (proj.VideoUrl.contains("youtube.com")){
                       return YouTubeVideoPlayer(videoUrl: proj.videoUrl, );
                     }else{
                       return Icon(Icons.videocam_off, size: 150,);
@@ -223,8 +223,11 @@ class AutorProyecto extends StatelessWidget{
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child:  Image.network(students.first.photoName, width: 100, height: 100,),
-                      ),
+                        child:  Image.network(students.first.photoName, width: 100, height: 100,errorBuilder:
+    (BuildContext context, Object exception, StackTrace? stackTrace) {
+    return const Icon(Icons.image,size: 50);
+    },)),
+
 
                       Text(students.first.get_all_name(),)
                     ],

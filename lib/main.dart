@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:app_maquinista/homePage.dart';
 import 'package:flutter/material.dart';
+
+import 'model/net/http_overwide.dart';
 void main(){
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {

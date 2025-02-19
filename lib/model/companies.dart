@@ -17,6 +17,6 @@ class Companies{
       this.img_url
       );
   factory Companies.fromJson (Map<String, dynamic> com){
-    return Companies(com["companyName"], User(com["asistenteNombre"],"",Role.COMPANIE), "",com["companyWeb"],com["logo_url"]);
+    return Companies(com["companyName"]??"", User(com["asistenteNombre"]??"","",Role.COMPANIE), "",com["companyWeb"]??"",com["logo_url"]??"");
   }
 }
