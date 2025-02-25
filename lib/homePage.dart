@@ -41,14 +41,12 @@ class Home extends StatelessWidget{
 
   //cargamos los datos
   Future<void> load() async{
-    projectos = await proj_mng.get_page(1);
     monlautech = await mont_mng.get_page(1);
     companies = await com_mng.get_page(1);
     meets = await met_mng.get_page(1);
   }
   Widget build(BuildContext context)  {
     load();
-    sleep(Duration(seconds: 10));
     List<Widget> children = [];
     //Iteramos las listas de los datos para rellenar la lista de los eventos (ponencias, projectos, proyectos monlautech)
     for (var meet in meets)
@@ -81,7 +79,7 @@ class Home extends StatelessWidget{
           ));
     }
 
-    for (var pro in projectos) {
+   /* for (var pro in projectos) {
       children.add(
           Card(
               shape: RoundedRectangleBorder(
@@ -108,7 +106,7 @@ class Home extends StatelessWidget{
                 },
               )
           ));
-    }
+    }*/
 
     for (var pro in testdinamicos) {
       children.add(
@@ -181,7 +179,7 @@ class Home extends StatelessWidget{
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
                               ProyectosPage(name: 'Proyectos',
-                                projectos: projectos,
+
                                 projects_mng: proj_mng,)))
                     },
                     //icono y texto del boton
@@ -195,7 +193,7 @@ class Home extends StatelessWidget{
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
                               ProyectosPage(name: 'Monlautech',
-                                  projectos: monlautech,
+
                                   projects_mng: mont_mng)))
                     },
                     //icono y texto del boton

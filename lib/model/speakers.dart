@@ -13,6 +13,6 @@ class Speakers{
     return this.name + " " + this.surname1 + " " + this.surname2;
   }
   factory Speakers.fromjson(Map<String, dynamic> speaker){
-    return Speakers(speaker["name"], speaker["description"], speaker["surname1"] , speaker["surname2"]);
+    return Speakers(speaker["name"]??"", speaker["description"]??"", speaker["surname1"]??"" , speaker["surname2"]??"");
   }
 }
