@@ -10,12 +10,16 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 150,
@@ -31,10 +35,11 @@ class TitleSection extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(width: 115), // Separador entre el título y el subtítulo
+          SizedBox(width: screenWidth * 0.29), // Separador entre el título y el subtítulo
           GestureDetector(
-            onTap: onSubtitleTap, // Acción cuando se toca el subtítulo
-            child: Text(
+            onTap: onSubtitleTap,
+            child:
+            Text(
               subtitle,
               style: const TextStyle(
                 color: Color.fromRGBO(0, 82, 158, 1),
