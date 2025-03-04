@@ -30,14 +30,21 @@ class _PDFviewState extends State<PDFview> {
   Future<void> _downloadAndLoadPDF() async {
     try {
       final response = await http.get(Uri.parse(widget.url));
-      final dir = await getTemporaryDirectory(); // Directorio temporal
-      final file = File("${dir.path}/temp.pdf");
-      await file.writeAsBytes(response.bodyBytes);
+      if (response.statusCode == 200){
+        final dir = await getTemporaryDirectory(); // Directorio temporal
+        final file = File("${dir.path}/temp.pdf");
+        await file.writeAsBytes(response.bodyBytes);
 
+        setState(() {
+          _localPath = file.path;
+          _isLoading = false;
+        });
+      }
       setState(() {
-        _localPath = file.path;
+        _localPath = "";
         _isLoading = false;
       });
+
     } catch (e) {
       print("Error descargando PDF: $e");
       setState(() {
@@ -61,25 +68,31 @@ class _PDFviewState extends State<PDFview> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    try{
+      return Scaffold(
 
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : PDFView(
-        filePath: _localPath,
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : PDFView(
+          filePath: _localPath,
 
-        onRender: (pages) {
-          print("Total de páginas: $pages");
-        },
-        onError: (error) {
-          print("Error renderizando PDF: $error");
-        },
-        onPageChanged: (page, total) {
-          print("Página actual: $page, Total: $total");
-        },
-      ),
-    );
+          onRender: (pages) {
+            print("Total de páginas: $pages");
+          },
+          onError: (error) {
+            print("Error renderizando PDF: $error");
+          },
+          onPageChanged: (page, total) {
+            print("Página actual: $page, Total: $total");
+          },
+        ),
+      );
+    }catch (e){
+      return Icon(Icons.picture_as_pdf,size: 200,);
+    }
+
   }
 }
+
 
 

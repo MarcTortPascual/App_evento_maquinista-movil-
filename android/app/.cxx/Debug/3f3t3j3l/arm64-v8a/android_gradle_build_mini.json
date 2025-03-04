@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/mtcraft22/Documentos/FlutterSDK/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/mtcraft22/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/home/mtcraft22/Documentos/monlau/m8/app_maquinista (copia)/android/app/.cxx/Debug/3f3t3j3l/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/mtcraft22/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/home/mtcraft22/Documentos/monlau/m8/app_maquinista (copia)/android/app/.cxx/Debug/3f3t3j3l/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

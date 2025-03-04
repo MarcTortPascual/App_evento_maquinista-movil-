@@ -1,4 +1,4 @@
-import 'package:app_maquinista/custom_widgets/page.dart';
+/* import 'package:app_maquinista/custom_widgets/page.dart';
 import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
@@ -11,13 +11,13 @@ import 'package:app_maquinista/model/projectos.dart';
 class ProyectosPage<T extends Proyecto> extends StatefulWidget{
   ProyectosPage({
     super.key,
-    required this.projectos,
     required this.name,
     required this.projects_mng
   });
+
   int current = 1;
   NetProjects projects_mng;
-  List<Proyecto> projectos ;
+  List<Proyecto> projectos = [] ;
   String name;
 
   @override
@@ -25,12 +25,16 @@ class ProyectosPage<T extends Proyecto> extends StatefulWidget{
 }
 
 class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
-  @override
-  Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
+  Future<void>load () async {
+    projectos = await widget.projects_mng.get_page(1);
+  }
+
+  ScrollController Sc_Lw = ScrollController();
+  ListView  render_proj(List<Proyecto> projectos){
+    print("poniendo proyectos");
+    print(projectos);
     List<Widget> children = [];
-    for (var proj in widget.projectos){
+    for (var proj in projectos){
       if (proj is DinamicTest){
         DinamicTest test  = proj as DinamicTest;
 
@@ -45,13 +49,11 @@ class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
               children: [
                 Text(test.Autor[0].get_all_name(),style: TextStyle(color: Color.fromARGB(255, 175, 175, 175)),textAlign: TextAlign.left,),
                 Text(test.initTime + " - " + test.endDate),
-                Image.network(test.ImagenUrl,height: 100, width: 200,
-                  errorBuilder:
-                      (BuildContext context, Object exception, StackTrace? stackTrace) {
-                        return const Text('Error a cargar la imagen');
-                      },
+                Image.network(test.ImagenUrl,width: 100, height: 200,errorBuilder:
+                    (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  return const Icon(Icons.image,size: 50);
+                },)
 
-                )
               ],
             ),
             trailing: Icon(Icons.menu),
@@ -73,7 +75,10 @@ class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
               children: [
                 Text(proj.Autor[0].get_all_name(),style: TextStyle(color: Color.fromARGB(255, 175, 175, 175)),textAlign: TextAlign.left,),
                 Text(proj.NivelEstudios),
-                Image.network(proj.ImagenUrl,height: 100, width: 200,)
+                Image.network(proj.ImagenUrl,height: 100, width: 200,errorBuilder:
+                    (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  return const Icon(Icons.image,size: 50);
+                },)
               ],
             ),
             trailing: Icon(Icons.menu),
@@ -86,26 +91,57 @@ class _ProyectosPageState<T extends Proyecto> extends State<ProyectosPage<T>> {
         );
       }
     }
-    ScrollController Sc_Lw = ScrollController();
+
     Sc_Lw.addListener((){
 
-        if (Sc_Lw.position.pixels != 0 && Sc_Lw.position.atEdge){
-          setState(() {
-            widget.projects_mng.get_page(widget.current).then((proj){
+      if (Sc_Lw.position.pixels != 0 && Sc_Lw.position.atEdge){
+        setState(() {
+          widget.projects_mng.get_page(widget.current).then((proj){
 
-                if (widget.current <= widget.projects_mng.available_pages){
-                  print("projectos ");
-                  print(proj);
-                  widget.projectos.addAll(proj);
-                  widget.current ++;
-                  print("actual page " + widget.current.toString());
-                }
-              });
-            });
-        }
+            if (widget.current <= widget.projects_mng.available_pages){
+              print("projectos ");
+              print(proj);
+              widget.projectos.addAll(proj);
+              widget.current ++;
+              print("actual page " + widget.current.toString());
+            }
+          });
+        });
+      }
     });
-    ListView lwproj =  ListView(children: children,controller: Sc_Lw,);
-    return PageMaquinista(tittle: Text(widget.name), body: lwproj );
+    return ListView(children: children,controller: Sc_Lw,);
+  }
+  @override
+
+  Widget build(BuildContext context) {
+
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+
+
+    /*return PageMaquinista(tittle: Text(widget.name), body: lwproj )*/
+    Future<List<Proyecto>> _proj_futuro = widget.projects_mng.get_page(widget.current);
+    return FutureBuilder(
+        future: _proj_futuro ,
+        builder: (BuildContext context, AsyncSnapshot<List<Proyecto>> snapshot) {
+
+            if (snapshot.hasData){
+              if (widget.projectos.isEmpty){
+                widget.projectos.addAll(snapshot.data??[]);
+              }
+              return PageMaquinista(tittle: Text("Proyectos"), body: render_proj(widget.projectos),);
+            }
+            if (snapshot.hasError){
+              return Text("Algo salio mal");
+            }
+            else{
+              return Icon(Icons.downloading);
+            }
+    }
+
+    );
   }
 }
 class Seach extends StatefulWidget{
@@ -166,7 +202,7 @@ class _SeachState extends State<Seach> {
               ]
           )
         ],
-      ),
+      ),  
     );
   }
-}
+} */

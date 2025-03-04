@@ -44,10 +44,9 @@ class Meeting_details extends StatelessWidget{
           Column(children: [
               Text(meeting.name),
               Row(children: [
-                Text(meeting.initTime + " - " ),
-                Text(meeting.endTime)
+                Text(meeting.date)
               ],),
-              Text("Resumen: "),
+              Text("Resumen: ", style: TextStyle(color: Colors.yellow , fontWeight: FontWeight.w700),),
               Text(meeting.description),
 
             ],),
