@@ -36,18 +36,23 @@ class TitleSection extends StatelessWidget {
             ],
           ),
           SizedBox(width: screenWidth * 0.25), // Separador entre el título y el subtítulo
-          GestureDetector(
-            onTap: onSubtitleTap,
-            child:
-            Text(
-              subtitle,
-              style: const TextStyle(
-                color: Color.fromRGBO(0, 82, 158, 1),
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+              onTap: onSubtitleTap,
+              child:
+              Text(
+                subtitle,
+                style: const TextStyle(
+                  color: Color.fromRGBO(0, 82, 158, 1),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
               ),
-            ),
-          ),
+            ),],
+          )
+
         ],
       ),
     );
