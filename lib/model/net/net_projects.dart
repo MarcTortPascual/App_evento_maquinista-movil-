@@ -6,7 +6,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //clase para cargar los projectos tanto normales como monlautech
 class NetProjects extends Netload<Proyecto> {
-
   NetProjects(int limit,String pagesEndpoint,String itemsEndpoit) :super(limit,pagesEndpoint,itemsEndpoit);
 
 
