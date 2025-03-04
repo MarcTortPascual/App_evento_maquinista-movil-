@@ -35,7 +35,7 @@ class TitleSection extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(width: screenWidth * 0.29), // Separador entre el título y el subtítulo
+          SizedBox(width: screenWidth * 0.25), // Separador entre el título y el subtítulo
           GestureDetector(
             onTap: onSubtitleTap,
             child:
