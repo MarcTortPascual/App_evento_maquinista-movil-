@@ -1,4 +1,4 @@
-import 'package:app_maquinista/custom_widgets/page.dart';
+/* import 'package:app_maquinista/custom_widgets/page.dart';
 import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
@@ -202,7 +202,7 @@ class _SeachState extends State<Seach> {
               ]
           )
         ],
-      ),
+      ),  
     );
   }
-}
+} */
