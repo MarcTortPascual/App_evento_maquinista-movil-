@@ -57,11 +57,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
-
-
-
 //lista para guardar los datos cargados de la bbdd
 List<Proyecto> projectos = [];
 List<Meetings> meets = [];
@@ -106,16 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _handleTapCarroussel() {
     print("Se hizo clic en la imagen $_currentIndex");
 
-    if (_currentIndex == 0) {
-      print("Abrir detalle del Proyecto 1");
-    } else if (_currentIndex == 1) {
-      print("Abrir detalle del Proyecto 2");
-    } else {
-      print("Otra acción para el índice $_currentIndex");
-    }
-  }
-
-  void _handleTapPrj() {
     if (_currentIndex == 0) {
       print("Abrir detalle del Proyecto 1");
     } else if (_currentIndex == 1) {
