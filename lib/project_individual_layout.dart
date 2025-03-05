@@ -5,8 +5,6 @@ import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
 
-
-
 class ProjectIndividualLayout extends StatefulWidget {
   Proyecto project;
 
@@ -16,10 +14,6 @@ class ProjectIndividualLayout extends StatefulWidget {
   _ProjectIndividualLayoutState createState() =>
       _ProjectIndividualLayoutState();
 }
-
-
-
-
 
 class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
     with SingleTickerProviderStateMixin {

@@ -5,20 +5,18 @@ import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
 import 'project_individual_layout.dart';
 import 'model/net/net_projects.dart';
+
 class ProjectsLayout extends StatefulWidget {
-   ProjectsLayout({
-      super.key,
-      required this.projects,
-      required this.proj_mng
-    });
-  NetProjects proj_mng ;
-   List<Proyecto> projects;
-   int current = 0;
+  ProjectsLayout({super.key, required this.projects, required this.proj_mng});
+  NetProjects proj_mng;
+  List<Proyecto> projects;
+  int current = 0;
   @override
   _ProjectsLayout createState() => _ProjectsLayout();
 }
 
-class _ProjectsLayout extends State<ProjectsLayout> {
+class _ProjectsLayout extends State<ProjectsLayout>
+    with SingleTickerProviderStateMixin {
   String _filterSelectOption = "Todos";
   ScrollController Sc_Lw = ScrollController();
   final List<String> _filter = [
@@ -28,31 +26,37 @@ class _ProjectsLayout extends State<ProjectsLayout> {
     "CFGM Carrocería",
     "CFGM Motocicletas"
   ];
- 
+  late TabController _tabController;
+
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-   
-
-    Sc_Lw.addListener((){
-
-      if ((Sc_Lw.position.minScrollExtent<Sc_Lw.position.pixels  && Sc_Lw.position.maxScrollExtent-100>Sc_Lw.position.pixels  )  ){
+    Sc_Lw.addListener(() {
+      if ((Sc_Lw.position.minScrollExtent < Sc_Lw.position.pixels &&
+          Sc_Lw.position.maxScrollExtent - 100 > Sc_Lw.position.pixels)) {
         setState(() {
-          widget.proj_mng.get_page(widget.current).then((proj){
-
-            if (widget.current <= widget.proj_mng.available_pages){
+          widget.proj_mng.get_page(widget.current).then((proj) {
+            if (widget.current <= widget.proj_mng.available_pages) {
               print("projectos ");
               print(proj);
               widget.projects.addAll(proj);
-              widget.current ++;
+              widget.current++;
               print("actual page " + widget.current.toString());
             }
           });
         });
       }
     });
-
-
 
     return Scaffold(
       body: SafeArea(
@@ -73,17 +77,30 @@ class _ProjectsLayout extends State<ProjectsLayout> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 150,
-                            child: Text(
-                              "Proyectos",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
+                          Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                            child: TabBar(
+                              controller: _tabController,
+                              indicator: const BoxDecoration(),
+                              dividerColor: Colors.transparent,
+                              indicatorColor: Colors.blue,
+                              labelColor: Colors.blue,
+                              unselectedLabelColor: Colors.grey,
+                              labelPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              isScrollable: true,
+                              tabAlignment: TabAlignment.start,
+                              tabs: [
+                                Tab(text: "Proyectos"),
+                                Tab(text: "MonlauTech"),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 110),
+                          //const SizedBox(width: 110),
                         ],
                       ),
                     ),
@@ -123,30 +140,45 @@ class _ProjectsLayout extends State<ProjectsLayout> {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
-                controller: Sc_Lw,
-                padding: EdgeInsets.zero,
-                itemCount: widget.projects.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProjectIndividualLayout(project: widget.projects[index],)
-                      ));
-                    },
-                    child: ProjectCards(
-                        projecto: widget.projects[index],
-                      ),
-                  );
-                },
-              )),
+                  child: TabBarView(
+                      controller: _tabController,
+                      children: [_projects(), _monlauTech()]))
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _projects() {
+    return SafeArea(
+      child: Expanded(
+          child: ListView.builder(
+        controller: Sc_Lw,
+        padding: EdgeInsets.zero,
+        itemCount: widget.projects.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProjectIndividualLayout(
+                            project: widget.projects[index],
+                          )));
+            },
+            child: ProjectCards(
+              projecto: widget.projects[index],
+            ),
+          );
+        },
+      )),
+    );
+  }
+
+  Widget _monlauTech() {
+    return SafeArea(
+      child: Expanded(child: Column()),
     );
   }
 }
