@@ -51,7 +51,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
                     
                     //validamos que sea un video de yt
                     if (widget.project.VideoUrl.contains("youtube.com")){
-                      return Ytvideo(videoUrl: widget.project.VideoUrl, );
+                      return Ytvideo(videoUrl: widget.project.VideoUrl,is_muted: false, );
                     }else{
                       return Icon(Icons.videocam_off, size: 150,);
                     }

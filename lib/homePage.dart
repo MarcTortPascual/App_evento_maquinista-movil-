@@ -57,11 +57,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
-
-
-
 //lista para guardar los datos cargados de la bbdd
 List<Proyecto> projectos = [];
 List<Meetings> meets = [];
@@ -134,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(projects: projectos,proj_mng: proj_mng,),
+          ProjectsLayout(projects: projectos,projects_mng: proj_mng,),
           MapLayout(),
           SpeakersLayout(ponencias: meets,),
           ExhibitorsLayout(),
