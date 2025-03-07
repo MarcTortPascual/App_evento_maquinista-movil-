@@ -14,9 +14,9 @@ class CarrouselPrj extends StatelessWidget {
         autoPlay: true,
         aspectRatio: 3.0,
         enlargeCenterPage: true,
-        viewportFraction: 0.8, // Optional: ensures there’s space between items
+        viewportFraction: 0.8,
       ),
-      items: projects.map((project) { //  Iteramos sobre la lista de proyectos
+      items: projects.map((project) {
         return Container(
           margin: EdgeInsets.all(5.0),
           child: ClipRRect(
@@ -25,7 +25,7 @@ class CarrouselPrj extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 Image.network(
-                  project.ImagenUrl,  // Ensure you have the correct image path
+                  project.ImagenUrl,
                   fit: BoxFit.cover,
                   width: 200.0,
                   errorBuilder:
@@ -40,7 +40,7 @@ class CarrouselPrj extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        project.Titulo ?? "Sin Nombre",  //  Extraemos el nombre
+                        project.Titulo ?? "Sin Nombre",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -71,7 +71,7 @@ class CarrouselPrj extends StatelessWidget {
             ),
           ),
         );
-      }).toList(),  // We convert the map into a list of widgets
+      }).toList(),
     );
   }
 }

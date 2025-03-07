@@ -1,15 +1,21 @@
+import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/material.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
+import 'model/net/net_monlautech.dart';
 import 'project_individual_layout.dart';
 import 'model/net/net_projects.dart';
+import 'model/dinamicTest.dart';
+import 'custom_widgets/carrousel_img.dart';
 
 class ProjectsLayout extends StatefulWidget {
-  ProjectsLayout({super.key, required this.projects, required this.proj_mng});
+  ProjectsLayout({super.key, required this.projects, required this.proj_mng, required this.monlauTech_mng, required this.monlauTechPrj});
   NetProjects proj_mng;
   List<Proyecto> projects;
+  NetMonalautech monlauTech_mng;
+  List<DinamicTest> monlauTechPrj;
   int current = 0;
   @override
   _ProjectsLayout createState() => _ProjectsLayout();
@@ -178,7 +184,27 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   Widget _monlauTech() {
     return SafeArea(
-      child: Expanded(child: Column()),
+      child: Expanded(
+          child: ListView.builder(
+            controller: Sc_Lw,
+            padding: EdgeInsets.zero,
+            itemCount: widget.monlauTechPrj.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProjectIndividualLayout(
+                            project: widget.monlauTechPrj[index],
+                          )));
+                },
+                child: ProjectCards(
+                  projecto: widget.monlauTechPrj[index],
+                ),
+              );
+            },
+          )),
     );
   }
 }

@@ -1,15 +1,12 @@
+import 'package:app_maquinista/model/speakers.dart';
 import 'package:flutter/material.dart';
 
 class SpeakersPopUpCArd extends StatelessWidget {
-  final String speakerName;
-  final double hour;
-  final String imageUrl;
+  final Speakers speakers;
 
   const SpeakersPopUpCArd({
     super.key,
-    required this.speakerName,
-    required this.imageUrl,
-    required this.hour,
+    required this.speakers
   });
 
   @override
@@ -37,7 +34,7 @@ class SpeakersPopUpCArd extends StatelessWidget {
                       child: SizedBox(
                         width: 170,
                         height: 200,
-                        child: Image.network(imageUrl, width: 100, height: 200),
+                        child: Image.network("", width: 100, height: 200),
                       ),
                     ),
                   ],
@@ -47,12 +44,17 @@ class SpeakersPopUpCArd extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      speakerName,
+                      speakers.name,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 16),
                     ),
                     Text(
-                      hour.toString(), // Convertir a String
+                      speakers.surname1, // Convertir a String
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      speakers.biography, // Convertir a String
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 16),
                     ),
