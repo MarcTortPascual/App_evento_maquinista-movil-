@@ -18,9 +18,10 @@ class ProjectsLayout extends StatefulWidget {
   List<Proyecto> projects;
   NetMonalautech monlauTech_mng;
   List<DinamicTest> monlauTechPrj;
-  int current = 0;
+  int current = 1;
+  ScrollController scController = ScrollController();
   @override
-  _ProjectsLayoutState createState() => _ProjectsLayoutState();
+  _ProjectsLayout createState() => _ProjectsLayout();
 }
 
 
@@ -48,11 +49,36 @@ class _ProjectsLayout extends State<ProjectsLayout>
     super.dispose();
   }
 
+  void _onScroll() {
+    if (widget.scController.position.pixels >= widget.scController.position.maxScrollExtent) {
+      _loadMoreProjects();
+    }
+  }
+
+  Future<void> _loadMoreProjects() async {
+    if (widget.current <= widget.proj_mng.available_pages) {
+      List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current);
+      if (newProjects.isNotEmpty) {
+        setState(() {
+          widget.projects.addAll(newProjects);
+          widget.current++;
+        });
+      }
+    }
+  }
+
+  @override
+  void disposeSC() {
+    widget.scController.removeListener(_onScroll);
+    widget.scController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Sc_Lw.addListener(() {
-      if ((Sc_Lw.position.minScrollExtent < Sc_Lw.position.pixels &&
-          Sc_Lw.position.maxScrollExtent - 100 > Sc_Lw.position.pixels)) {
+    widget.scController.addListener(() {
+      if ((widget.scController.position.minScrollExtent < widget.scController.position.pixels &&
+          widget.scController.position.maxScrollExtent - 100 > widget.scController.position.pixels)) {
         setState(() {
           widget.proj_mng.get_page(widget.current).then((proj) {
             if (widget.current <= widget.proj_mng.available_pages) {
@@ -159,7 +185,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     return SafeArea(
       child: Expanded(
           child: ListView.builder(
-        controller: Sc_Lw,
+        controller: widget.scController,
         padding: EdgeInsets.zero,
         itemCount: widget.projects.length,
         itemBuilder: (context, index) {
@@ -186,7 +212,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
       child: Column(
         children: [
               ListView.builder(
-                controller: Sc_Lw,
+                controller: widget.scController,
                 padding: EdgeInsets.zero,
                 itemCount: widget.monlauTechPrj.length,
                 itemBuilder: (context, index) {
