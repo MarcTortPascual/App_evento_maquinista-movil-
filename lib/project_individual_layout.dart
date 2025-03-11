@@ -41,19 +41,18 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
           children: [
             SizedBox(
               height: 300,
-              child: Builder(builder: (context) {
-                //validamos que sea un video de yt
-                if (widget.project.VideoUrl.contains("youtube.com")) {
-                  return Ytvideo(
-                    videoUrl: widget.project.VideoUrl,
-                  );
-                } else {
-                  return Icon(
-                    Icons.videocam_off,
-                    size: 150,
-                  );
-                }
-              }),
+              child:  Builder(builder: (context) {
+                    
+                    //validamos que sea un video de yt
+                    if (widget.project.VideoUrl.contains("youtube.com")){
+                      return Ytvideo(videoUrl: widget.project.VideoUrl,is_muted: false, );
+                    }else{
+                      return Icon(Icons.videocam_off, size: 150,);
+                    }
+
+                  }
+
+                  ),
             ),
             TabBar(
               controller: _tabController,

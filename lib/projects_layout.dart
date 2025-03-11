@@ -2,10 +2,12 @@ import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/material.dart';
+import 'package:app_maquinista/model/net/net_projects.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
 import 'model/net/net_monlautech.dart';
 import 'project_individual_layout.dart';
+
 import 'model/net/net_projects.dart';
 import 'model/dinamicTest.dart';
 import 'custom_widgets/carrousel_img.dart';
@@ -18,13 +20,13 @@ class ProjectsLayout extends StatefulWidget {
   List<DinamicTest> monlauTechPrj;
   int current = 0;
   @override
-  _ProjectsLayout createState() => _ProjectsLayout();
+  _ProjectsLayoutState createState() => _ProjectsLayoutState();
 }
+
 
 class _ProjectsLayout extends State<ProjectsLayout>
     with SingleTickerProviderStateMixin {
   String _filterSelectOption = "Todos";
-  ScrollController Sc_Lw = ScrollController();
   final List<String> _filter = [
     "Todos",
     "CFGS Automación",
@@ -32,6 +34,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "CFGM Carrocería",
     "CFGM Motocicletas"
   ];
+
   late TabController _tabController;
 
   void initState() {
@@ -63,7 +66,6 @@ class _ProjectsLayout extends State<ProjectsLayout>
         });
       }
     });
-
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -115,22 +117,19 @@ class _ProjectsLayout extends State<ProjectsLayout>
                           ? _filterSelectOption
                           : null,
                       hint: Text("Selecciona una opción"),
-                      icon: const Icon(Icons.arrow_drop_down,
-                          color: Colors.black),
+                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                       dropdownColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       underline: Container(),
                       onChanged: (String? newValue) {
                         setState(() {
                           _filterSelectOption = newValue!;
                         });
                       },
-                      items:
-                          _filter.map<DropdownMenuItem<String>>((String value) {
+                      items: _filter.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value,
-                              style: const TextStyle(color: Colors.black)),
+                          child: Text(value, style: const TextStyle(color: Colors.black)),
                         );
                       }).toList(),
                     )
