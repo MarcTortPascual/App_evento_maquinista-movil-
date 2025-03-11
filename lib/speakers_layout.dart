@@ -1,4 +1,5 @@
 import 'package:app_maquinista/custom_widgets/line_painter.dart';
+import 'package:app_maquinista/custom_widgets/pop_up_speaker_card.dart';
 import 'package:app_maquinista/custom_widgets/speakers_card.dart';
 import 'package:app_maquinista/model/meetings.dart';
 import 'package:flutter/material.dart';
@@ -16,54 +17,6 @@ class SpeakersLayout extends StatefulWidget {
 }
 
 class _SpeakersLayout extends State<SpeakersLayout> {
-
-  /*final List<Map<String, String>> items = [
-    {
-      "title": "Titulo ponencia 1",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 2",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 3",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 4",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 5",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 6",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 7",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 8",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-    {
-      "title": "Titulo ponencia 9",
-      "hour": "10:00",
-      "author": "Autores.",
-    },
-  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +69,9 @@ class _SpeakersLayout extends State<SpeakersLayout> {
                     padding: EdgeInsets.zero,
                     itemCount: widget.ponencias.length,
                     itemBuilder: (context, index) {
-
                       return InkWell(
                         onTap: () {
-
+                          //SpeakersPopUpCArd(speakers: );
                         },
                         child:
                         SpeakerCard(

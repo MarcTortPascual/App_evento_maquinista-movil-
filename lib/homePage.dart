@@ -1,12 +1,8 @@
-//pagina de inicio
-
 import 'dart:io';
 
-
-//importación de de las classes para cargar de la bbdd y la classe de los diferentes
-//apartados
-
+import 'package:app_maquinista/custom_widgets/pop_up_speaker_card.dart';
 import 'package:app_maquinista/model/net/net_monlautech.dart';
+import 'package:app_maquinista/project_individual_layout.dart';
 
 import 'custom_widgets/carrousel_prj.dart';
 import 'custom_widgets/custom_card.dart';
@@ -33,7 +29,6 @@ import 'title_section.dart';
 
 import 'package:flutter/material.dart';
 import 'model/dinamicTest.dart';
-
 
 void main(){
   HttpOverrides.global = MyHttpOverrides();
@@ -102,18 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _handleTapCarroussel() {
-    print("Se hizo clic en la imagen $_currentIndex");
-
-    if (_currentIndex == 0) {
-      print("Abrir detalle del Proyecto 1");
-    } else if (_currentIndex == 1) {
-      print("Abrir detalle del Proyecto 2");
-    } else {
-      print("Otra acción para el índice $_currentIndex");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     load();
@@ -123,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos,),
+          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos),
           MapLayout(),
           SpeakersLayout(ponencias: meets,),
           ExhibitorsLayout(),
@@ -181,19 +164,66 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: 'DESCUBRE TODOS LOS PROYECTOS',
                 subtitle: 'PROYECTOS',
                 onTitleTap: () {},
-                onSubtitleTap: () {},
+                onSubtitleTap: () {
+                  MaterialPageRoute(
+                      builder: (context) => ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos,));
+                },
               ))
             ]),
             Row(children: [
               CustomPaint(size: const Size(100, 10), painter: LinePainter())
             ]),
-            Row(children: [
-              Expanded(
-                  child: InkWell(
-                onTap: _handleTapCarroussel,
-                child: CarrouselPrj(projects: projectos),
-              ))
-            ]),
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 200, // Altura fija para el ListView horizontal
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: projectos.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProjectIndividualLayout(project: projectos[index]),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                width: 150,
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      projectos[index].Titulo ?? "Título por defecto",
+                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      projectos[index].Autor[0].name ?? "Sin descripción",
+                                      style: const TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Row(children: [
               CustomPaint(size: const Size(100, 10), painter: LinePainter())
             ]),
@@ -203,7 +233,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: 'DESCUBRE LOS PONENTES',
                 subtitle: 'PONENTES',
                 onTitleTap: () {},
-                onSubtitleTap: () {},
+                onSubtitleTap: () {
+                  MaterialPageRoute(
+                      builder: (context) => SpeakersLayout(ponencias: meets));
+                },
               ))
             ]),
             Expanded(
@@ -213,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      
+                      //SpeakersPopUpCArd(speakers: meets[index,);
                     },
                     child: CustomCard(
                         title: meets[index].name?? "Título por defecto",

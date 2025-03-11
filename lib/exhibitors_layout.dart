@@ -3,17 +3,17 @@ import 'package:app_maquinista/model/companies.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_widgets/line_painter.dart';
+import 'model/projectos.dart';
 
 class ExhibitorsLayout extends StatefulWidget {
-  const ExhibitorsLayout({super.key});
-
+  ExhibitorsLayout({super.key});
   @override
   _ExhibitorsLayout createState() => _ExhibitorsLayout();
 }
 
 class _ExhibitorsLayout extends State<ExhibitorsLayout> {
 
-  //List<Companies> exibitors;
+  List<Proyecto> monlautech = [];
 
   @override
   Widget build(BuildContext context) {

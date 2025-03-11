@@ -35,18 +35,34 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "CFGM Carrocería",
     "CFGM Motocicletas"
   ];
+  List<Proyecto> filteredProjectos = [];
 
   late TabController _tabController;
+  final TextEditingController _searchController = TextEditingController();
 
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    filteredProjectos = widget.projects;
+    _searchController.addListener(_filterProjectos);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _searchController.dispose();
     super.dispose();
+  }
+
+  void _filterProjectos() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      filteredProjectos = widget.projects.where((project) {
+        final title = project.Titulo.toLowerCase();
+        final description = project.Autor.toString().toLowerCase();
+        return title.contains(query) || description.contains(query);
+      }).toList();
+    });
   }
 
   void _onScroll() {
@@ -170,10 +186,24 @@ class _ProjectsLayout extends State<ProjectsLayout>
                   )
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Buscar proyectos...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                   child: TabBarView(
                       controller: _tabController,
-                      children: [_projects(), _monlauTech()]))
+                      children: [_projects(), _monlauTech()])
+              ),
             ],
           ),
         ),
