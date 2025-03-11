@@ -74,7 +74,7 @@ abstract class Netload<T>{
     }
   }
 
-  //controlamos que se carge alguna pagina auue este fuera de rango
+  //controlamos que se carge alguna pagina aunque este fuera de rango
 
   Future<List<dynamic>> get_items_page(int pages)async{
 

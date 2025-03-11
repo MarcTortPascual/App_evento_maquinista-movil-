@@ -24,6 +24,9 @@ class CVCard extends StatelessWidget {
             width: imageSize,
             height: imageSize,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(Icons.photo,size: 150);
+            },
           ),
         ),
         const SizedBox(height: 8),
