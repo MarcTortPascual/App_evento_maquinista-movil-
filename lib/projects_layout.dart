@@ -184,27 +184,30 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   Widget _monlauTech() {
     return SafeArea(
-      child: Expanded(
-          child: ListView.builder(
-            controller: Sc_Lw,
-            padding: EdgeInsets.zero,
-            itemCount: widget.monlauTechPrj.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProjectIndividualLayout(
-                            project: widget.monlauTechPrj[index],
-                          )));
+      child: Column(
+        children: [
+              ListView.builder(
+                controller: Sc_Lw,
+                padding: EdgeInsets.zero,
+                itemCount: widget.monlauTechPrj.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProjectIndividualLayout(
+                                project: widget.monlauTechPrj[index],
+                              )));
+                    },
+                    child: ProjectCards(
+                      projecto: widget.monlauTechPrj[index],
+                    ),
+                  );
                 },
-                child: ProjectCards(
-                  projecto: widget.monlauTechPrj[index],
-                ),
-              );
-            },
-          )),
+              ),
+        ],
+      )
     );
   }
 }

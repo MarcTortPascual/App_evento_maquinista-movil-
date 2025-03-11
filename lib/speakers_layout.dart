@@ -3,7 +3,6 @@ import 'package:app_maquinista/custom_widgets/speakers_card.dart';
 import 'package:app_maquinista/model/meetings.dart';
 import 'package:flutter/material.dart';
 
-
 class SpeakersLayout extends StatefulWidget {
   SpeakersLayout({
     super.key,
@@ -17,8 +16,6 @@ class SpeakersLayout extends StatefulWidget {
 }
 
 class _SpeakersLayout extends State<SpeakersLayout> {
-
-  
 
   /*final List<Map<String, String>> items = [
     {
