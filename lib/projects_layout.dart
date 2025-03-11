@@ -1,25 +1,31 @@
-
-
-import 'package:flutter/material.dart';
+import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/projectos.dart';
+import 'package:app_maquinista/model/students.dart';
+import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
+import 'model/net/net_monlautech.dart';
 import 'project_individual_layout.dart';
 
+import 'model/net/net_projects.dart';
+import 'model/dinamicTest.dart';
+import 'custom_widgets/carrousel_img.dart';
+
 class ProjectsLayout extends StatefulWidget {
-  ProjectsLayout({super.key, required this.projects, required this.projects_mng});
-
-  final NetProjects projects_mng;
-  final List<Proyecto> projects;
-  int current = 1;
-  final ScrollController scController = ScrollController();
-
+  ProjectsLayout({super.key, required this.projects, required this.proj_mng, required this.monlauTech_mng, required this.monlauTechPrj});
+  NetProjects proj_mng;
+  List<Proyecto> projects;
+  NetMonalautech monlauTech_mng;
+  List<DinamicTest> monlauTechPrj;
+  int current = 0;
   @override
   _ProjectsLayoutState createState() => _ProjectsLayoutState();
 }
 
-class _ProjectsLayoutState extends State<ProjectsLayout> {
+
+class _ProjectsLayout extends State<ProjectsLayout>
+    with SingleTickerProviderStateMixin {
   String _filterSelectOption = "Todos";
   final List<String> _filter = [
     "Todos",
@@ -29,39 +35,37 @@ class _ProjectsLayoutState extends State<ProjectsLayout> {
     "CFGM Motocicletas"
   ];
 
-  @override
+  late TabController _tabController;
+
   void initState() {
     super.initState();
-    widget.scController.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    if (widget.scController.position.pixels >= widget.scController.position.maxScrollExtent) {
-      _loadMoreProjects();
-    }
-  }
-
-  Future<void> _loadMoreProjects() async {
-    if (widget.current <= widget.projects_mng.available_pages) {
-      List<Proyecto> newProjects = await widget.projects_mng.get_page(widget.current);
-      if (newProjects.isNotEmpty) {
-        setState(() {
-          widget.projects.addAll(newProjects);
-          widget.current++;
-        });
-      }
-    }
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
-    widget.scController.removeListener(_onScroll);
-    widget.scController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Sc_Lw.addListener(() {
+      if ((Sc_Lw.position.minScrollExtent < Sc_Lw.position.pixels &&
+          Sc_Lw.position.maxScrollExtent - 100 > Sc_Lw.position.pixels)) {
+        setState(() {
+          widget.proj_mng.get_page(widget.current).then((proj) {
+            if (widget.current <= widget.proj_mng.available_pages) {
+              print("projectos ");
+              print(proj);
+              widget.projects.addAll(proj);
+              widget.current++;
+              print("actual page " + widget.current.toString());
+            }
+          });
+        });
+      }
+    });
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -81,17 +85,30 @@ class _ProjectsLayoutState extends State<ProjectsLayout> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 150,
-                            child: Text(
-                              "Proyectos",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
+                          Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                            child: TabBar(
+                              controller: _tabController,
+                              indicator: const BoxDecoration(),
+                              dividerColor: Colors.transparent,
+                              indicatorColor: Colors.blue,
+                              labelColor: Colors.blue,
+                              unselectedLabelColor: Colors.grey,
+                              labelPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              isScrollable: true,
+                              tabAlignment: TabAlignment.start,
+                              tabs: [
+                                Tab(text: "Proyectos"),
+                                Tab(text: "MonlauTech"),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 110),
+                          //const SizedBox(width: 110),
                         ],
                       ),
                     ),
@@ -128,31 +145,68 @@ class _ProjectsLayoutState extends State<ProjectsLayout> {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
-                  controller: widget.scController,
-                  padding: EdgeInsets.zero,
-                  itemCount: widget.projects.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectIndividualLayout(project: widget.projects[index],)
-                        ));
-                      },
-                      child: ProjectCards(
-                          projecto: widget.projects[index],
-                        ),
-                    );
-                  },
-                ),
-              ),
+                  child: TabBarView(
+                      controller: _tabController,
+                      children: [_projects(), _monlauTech()]))
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _projects() {
+    return SafeArea(
+      child: Expanded(
+          child: ListView.builder(
+        controller: Sc_Lw,
+        padding: EdgeInsets.zero,
+        itemCount: widget.projects.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProjectIndividualLayout(
+                            project: widget.projects[index],
+                          )));
+            },
+            child: ProjectCards(
+              projecto: widget.projects[index],
+            ),
+          );
+        },
+      )),
+    );
+  }
+
+  Widget _monlauTech() {
+    return SafeArea(
+      child: Column(
+        children: [
+              ListView.builder(
+                controller: Sc_Lw,
+                padding: EdgeInsets.zero,
+                itemCount: widget.monlauTechPrj.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProjectIndividualLayout(
+                                project: widget.monlauTechPrj[index],
+                              )));
+                    },
+                    child: ProjectCards(
+                      projecto: widget.monlauTechPrj[index],
+                    ),
+                  );
+                },
+              ),
+        ],
+      )
     );
   }
 }

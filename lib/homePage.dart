@@ -6,6 +6,8 @@ import 'dart:io';
 //importación de de las classes para cargar de la bbdd y la classe de los diferentes
 //apartados
 
+import 'package:app_maquinista/model/net/net_monlautech.dart';
+
 import 'custom_widgets/carrousel_prj.dart';
 import 'custom_widgets/custom_card.dart';
 import 'custom_widgets/line_painter.dart';
@@ -30,6 +32,8 @@ import 'speakers_layout.dart';
 import 'title_section.dart';
 
 import 'package:flutter/material.dart';
+import 'model/dinamicTest.dart';
+
 
 void main(){
   HttpOverrides.global = MyHttpOverrides();
@@ -62,11 +66,11 @@ List<Proyecto> projectos = [];
 List<Meetings> meets = [];
 List<DinamicTest> testdinamicos = [];
 List<Proyecto> monlautech = [];
-List<Companies> companies =[];
+List<Companies> companies = [];
 
 //Inicializamos las classes para cargar los datos
 NetProjects proj_mng =  NetProjects(7,"projectsPages","projects");
-NetProjects mont_mng =  NetProjects(7,"monlautechPages","monlautech");
+NetMonalautech mont_mng =  NetMonalautech(7);
 NetCompanies com_mng = NetCompanies(7);
 NetMeetings met_mng = NetMeetings(7);
 
@@ -110,16 +114,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _handleTapPrj() {
-    if (_currentIndex == 0) {
-      print("Abrir detalle del Proyecto 1");
-    } else if (_currentIndex == 1) {
-      print("Abrir detalle del Proyecto 2");
-    } else {
-      print("Otra acción para el índice $_currentIndex");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     load();
@@ -129,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(projects: projectos,projects_mng: proj_mng,),
+          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos,),
           MapLayout(),
           SpeakersLayout(ponencias: meets,),
           ExhibitorsLayout(),

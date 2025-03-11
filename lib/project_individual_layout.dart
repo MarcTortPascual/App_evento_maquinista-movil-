@@ -4,8 +4,7 @@ import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectIndividualLayout extends StatefulWidget {
   Proyecto project;
@@ -17,12 +16,7 @@ class ProjectIndividualLayout extends StatefulWidget {
       _ProjectIndividualLayoutState();
 }
 
-
-
-
-
-class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
-    with SingleTickerProviderStateMixin {
+class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -78,7 +72,6 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
                   _buildDetailsSection(),
                   _buildMemorySection(),
                   _buildAuthorsSection()
-
                 ],
               ),
             ),
@@ -90,44 +83,50 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
 
   Widget _buildDetailsSection() {
     return Scaffold(
-        body: Text(widget.project.Resumen)
-    );
+        body: Center(
+      child: Expanded(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Text(widget.project.Resumen),
+        ElevatedButton(
+            onPressed: _goToEvaluate, child: Text("Evaluar Proyecto"))
+      ])),
+    ));
   }
 
   Widget _buildMemorySection() {
-    return Scaffold(
-      body: PDFview(url: widget.project.MemoriaUrl)
-    );
+    return Scaffold(body: PDFview(url: widget.project.MemoriaUrl));
   }
 
   Widget _buildAuthorsSection() {
-    /*
-      Padding(
-                padding: const EdgeInsets.only(left: 5.0, top: 10.0),
-                child: CVCard(imagePath: '', name: "hola"),
-              ),
-     */
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children:[
-          Expanded(child: 
-          ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: widget.project.Autor.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: widget.project.Autor.length,
+              itemBuilder: (context, index) {
+                return InkWell(
                     onTap: () {},
                     child: CVCard(
                       imagePath: widget.project.Autor[index].photoName,
                       name: widget.project.Autor[index].get_all_name(),
                     )
-                  );
-                },
-              ),
+                );
+              },
+            ),
           ),
         ],
       ),
     );
+  }
+
+  _goToEvaluate() async {
+    final Uri _url = Uri.parse('https://stackoverflow.com/questions/43149055/how-do-i-open-a-web-browser-url-from-my-flutter-code');
+    if (!await launchUrl(_url)) {
+      throw Exception("Don't work");
+    }
   }
 }
