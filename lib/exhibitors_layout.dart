@@ -39,7 +39,7 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                               SizedBox(
                                 width: 150,
                                 child: Text(
-                                  "Ponencias",
+                                  "Expositores",
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(

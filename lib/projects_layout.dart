@@ -1,16 +1,11 @@
-
-import 'package:app_maquinista/model/dinamicTest.dart';
-import 'package:app_maquinista/model/net/net_monlautech.dart';
-import 'package:app_maquinista/model/projectos.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
+import 'package:app_maquinista/model/net/net_monlautech.dart';
+import 'package:app_maquinista/model/dinamicTest.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
 import 'project_individual_layout.dart';
-import 'model/dinamicTest.dart';
-
 
 class ProjectsLayout extends StatefulWidget {
   ProjectsLayout({
@@ -20,23 +15,20 @@ class ProjectsLayout extends StatefulWidget {
     required this.monlauTech_mng,
     required this.monlauTechPrj,
   });
-  NetProjects proj_mng;
-  List<Proyecto> projects;
-  NetMonalautech monlauTech_mng;
-  List<DinamicTest> monlauTechPrj;
+
+  final NetProjects proj_mng;
+  final List<Proyecto> projects;
+  final NetMonalautech monlauTech_mng;
+  final List<DinamicTest> monlauTechPrj;
   int current = 1;
-  ScrollController scController = ScrollController();
+  final ScrollController scController = ScrollController();
 
   @override
-  _ProjectsLayoutState createState() => _ProjectsLayoutState();
-  
-  
+  _ProjectsLayout createState() => _ProjectsLayout();
 }
-
 
 class _ProjectsLayout extends State<ProjectsLayout>
     with SingleTickerProviderStateMixin {
-
   String _filterSelectOption = "Todos";
   final List<String> _filter = [
     "Todos",
@@ -66,7 +58,6 @@ class _ProjectsLayout extends State<ProjectsLayout>
     widget.scController.removeListener(_onScroll);
     widget.scController.dispose();
     super.dispose();
- 
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
@@ -96,9 +87,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
       _loadMoreProjects();
     }
   }
-  
 
-   
   Future<void> _loadMoreProjects() async {
     if (widget.current <= widget.proj_mng.available_pages) {
       List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current);
@@ -112,7 +101,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     }
   }
 
-  
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -243,31 +232,19 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   Widget _monlauTech() {
-    return SafeArea(
-      child: Column(
-        children: [
-              ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: widget.monlauTechPrj.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProjectIndividualLayout(
-                                project: widget.monlauTechPrj[index],
-                              )));
-                    },
-                    
-                    child: 
-                      ProjectCards(
-                
-                      projecto: widget.monlauTechPrj[index],
-                    ),
-                  );
-                },
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemCount: widget.monlauTechPrj.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectIndividualLayout(
+                  project: widget.monlauTechPrj[index],
+                ),
               ),
             );
           },

@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
 //lista para guardar los datos cargados de la bbdd
 List<Proyecto> projectos = [];
 List<Meetings> meets = [];
-//List<DinamicTest> testdinamicos = [];
+List<DinamicTest> testdinamicos = [];
 List<DinamicTest> monlautech = [];
 List<Companies> companies = [];
 
