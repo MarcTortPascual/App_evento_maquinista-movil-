@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
 //lista para guardar los datos cargados de la bbdd
 List<Proyecto> projectos = [];
 List<Meetings> meets = [];
-List<DinamicTest> testdinamicos = [];
-List<Proyecto> monlautech = [];
+//List<DinamicTest> testdinamicos = [];
+List<DinamicTest> monlautech = [];
 List<Companies> companies = [];
 
 //Inicializamos las classes para cargar los datos
@@ -107,11 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(
-              projects: projectos,
-              proj_mng: proj_mng,
-              monlauTech_mng: mont_mng,
-              monlauTechPrj: testdinamicos),
+          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: monlautech,),
           MapLayout(),
           SpeakersLayout(
             ponencias: meets,
@@ -266,6 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ]),
             Expanded(
               child: ListView.builder(
+                
                 padding: EdgeInsets.zero,
                 itemCount: meets.length,
                 itemBuilder: (context, index) {

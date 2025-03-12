@@ -122,7 +122,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
   }
 
   _goToEvaluate() async {
-    final Uri _url = Uri.parse('https://stackoverflow.com/questions/43149055/how-do-i-open-a-web-browser-url-from-my-flutter-code');
+    final Uri _url = Uri.parse(widget.project.UrlEvaluation);
     if (!await launchUrl(_url)) {
       throw Exception("Don't work");
     }
