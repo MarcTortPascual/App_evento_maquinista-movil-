@@ -1,16 +1,12 @@
-import 'package:app_maquinista/homePage.dart';
-import 'package:app_maquinista/model/projectos.dart';
-import 'package:app_maquinista/model/students.dart';
+import 'package:app_maquinista/model/dinamicTest.dart';
+import 'package:app_maquinista/model/net/net_monlautech.dart';
 import 'package:flutter/material.dart';
+import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
-import 'model/net/net_monlautech.dart';
 import 'project_individual_layout.dart';
-
-import 'model/net/net_projects.dart';
-import 'model/dinamicTest.dart';
-import 'custom_widgets/carrousel_img.dart';
 
 class ProjectsLayout extends StatefulWidget {
   ProjectsLayout({super.key, required this.projects, required this.proj_mng, required this.monlauTech_mng, required this.monlauTechPrj});
@@ -21,12 +17,13 @@ class ProjectsLayout extends StatefulWidget {
   int current = 1;
   ScrollController scController = ScrollController();
   @override
-  _ProjectsLayout createState() => _ProjectsLayout();
+  _ProjectsLayoutState createState() => _ProjectsLayoutState();
+  
+  
 }
 
-
-class _ProjectsLayout extends State<ProjectsLayout>
-    with SingleTickerProviderStateMixin {
+class _ProjectsLayoutState extends State<ProjectsLayout>  
+  with SingleTickerProviderStateMixin {
   String _filterSelectOption = "Todos";
   final List<String> _filter = [
     "Todos",
@@ -35,18 +32,12 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "CFGM Carrocería",
     "CFGM Motocicletas"
   ];
-
   late TabController _tabController;
-
+  @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+    widget.scController.addListener(_onScroll);
+    _tabController = TabController(length: 2, vsync: this );
   }
 
   void _onScroll() {
@@ -54,7 +45,9 @@ class _ProjectsLayout extends State<ProjectsLayout>
       _loadMoreProjects();
     }
   }
+  
 
+   
   Future<void> _loadMoreProjects() async {
     if (widget.current <= widget.proj_mng.available_pages) {
       List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current);
@@ -68,13 +61,15 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   @override
-  void disposeSC() {
+  void dispose() {
     widget.scController.removeListener(_onScroll);
     widget.scController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
-  @override
+
+ @override
   Widget build(BuildContext context) {
     widget.scController.addListener(() {
       if ((widget.scController.position.minScrollExtent < widget.scController.position.pixels &&
@@ -212,7 +207,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
       child: Column(
         children: [
               ListView.builder(
-                controller: widget.scController,
+                shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 itemCount: widget.monlauTechPrj.length,
                 itemBuilder: (context, index) {
@@ -225,7 +220,10 @@ class _ProjectsLayout extends State<ProjectsLayout>
                                 project: widget.monlauTechPrj[index],
                               )));
                     },
-                    child: ProjectCards(
+                    
+                    child: 
+                      ProjectCards(
+                
                       projecto: widget.monlauTechPrj[index],
                     ),
                   );
@@ -235,4 +233,6 @@ class _ProjectsLayout extends State<ProjectsLayout>
       )
     );
   }
+
+
 }
