@@ -57,8 +57,8 @@ class _MapLayout extends State<MapLayout> {
           ],
         ),
         SizedBox(
-          width: 360,
-          height: 200,
+          width: 500,
+          height: 270,
           child:
               Image.asset('assets/img/Plano.png'),
         ),
@@ -85,9 +85,7 @@ class _MapLayout extends State<MapLayout> {
               )
           ),
           Row(
-            children: [
-              Expanded(child: CarrouselImg(imgList: imgEvent))
-            ],
+            children: [Expanded(child: CarrouselImg(imgList: imgEvent))],
           )
         ])
       ]),
