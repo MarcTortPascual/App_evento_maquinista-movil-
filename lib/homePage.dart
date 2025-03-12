@@ -30,7 +30,7 @@ import 'title_section.dart';
 import 'package:flutter/material.dart';
 import 'model/dinamicTest.dart';
 
-void main(){
+void main() {
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
@@ -64,15 +64,15 @@ List<Proyecto> monlautech = [];
 List<Companies> companies = [];
 
 //Inicializamos las classes para cargar los datos
-NetProjects proj_mng =  NetProjects(7,"projectsPages","projects");
-NetMonalautech mont_mng =  NetMonalautech(7);
+NetProjects proj_mng = NetProjects(7, "projectsPages", "projects");
+NetMonalautech mont_mng = NetMonalautech(7);
 NetCompanies com_mng = NetCompanies(7);
 NetMeetings met_mng = NetMeetings(7);
 
 //classe pricipal del widget del la pantalla de inicio
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-  
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -82,9 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
     projectos = await proj_mng.get_page(1);
     monlautech = await mont_mng.get_page(1);
     companies = await com_mng.get_page(1);
-    meets  = await met_mng.get_page(1); 
+    meets = await met_mng.get_page(1);
     return 1;
   }
+
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
   final int _currentIndex = 0; // Guardará el índice del carrusel
@@ -106,9 +107,15 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos),
+          ProjectsLayout(
+              projects: projectos,
+              proj_mng: proj_mng,
+              monlauTech_mng: mont_mng,
+              monlauTechPrj: testdinamicos),
           MapLayout(),
-          SpeakersLayout(ponencias: meets,),
+          SpeakersLayout(
+            ponencias: meets,
+          ),
           ExhibitorsLayout(),
         ],
       ),
@@ -152,9 +159,9 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                     child: Ytvideo(
-                        videoUrl: 'https://www.youtube.com/watch?v=pNFdHHJ4ut8',
-                        hide_control: true,
-                        is_muted: true,
+                  videoUrl: 'https://www.youtube.com/watch?v=pNFdHHJ4ut8',
+                  hide_control: true,
+                  is_muted: true,
                 ))
               ],
             ),
@@ -165,8 +172,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 subtitle: 'PROYECTOS',
                 onTitleTap: () {},
                 onSubtitleTap: () {
-                  MaterialPageRoute(
-                      builder: (context) => ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: testdinamicos,));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProjectsLayout(
+                          projects: projectos,
+                          proj_mng: proj_mng,
+                          monlauTech_mng: mont_mng,
+                          monlauTechPrj: testdinamicos,
+                        ),
+                      )
+                  );
                 },
               ))
             ]),
@@ -187,7 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProjectIndividualLayout(project: projectos[index]),
+                                builder: (context) => ProjectIndividualLayout(
+                                    project: projectos[index]),
                               ),
                             );
                           },
@@ -202,13 +219,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      projectos[index].Titulo ?? "Título por defecto",
-                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      projectos[index].Titulo ??
+                                          "Título por defecto",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.center,
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      projectos[index].Autor[0].name ?? "Sin descripción",
+                                      projectos[index].Autor[0].name ??
+                                          "Sin descripción",
                                       style: const TextStyle(fontSize: 14),
                                       textAlign: TextAlign.center,
                                     ),
@@ -234,9 +255,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 subtitle: 'PONENTES',
                 onTitleTap: () {},
                 onSubtitleTap: () {
-                  MaterialPageRoute(
-                      builder: (context) => SpeakersLayout(ponencias: meets));
-                },
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SpeakersLayout(ponencias: meets)
+                        ),
+                      );
+                  },
               ))
             ]),
             Expanded(
@@ -246,13 +271,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      //SpeakersPopUpCArd(speakers: meets[index,);
+                      // SpeakersPopUpCArd(speakers: meets[index,);
                     },
                     child: CustomCard(
-                        title: meets[index].name?? "Título por defecto",
+                        title: meets[index].name ?? "Título por defecto",
                         time: meets[index].initTime ?? "00:00",
                         imageUrl: "",
-                        description: meets[index].description ?? "Sin descripción"),
+                        description:
+                            meets[index].description ?? "Sin descripción"),
                   );
                 },
               ),

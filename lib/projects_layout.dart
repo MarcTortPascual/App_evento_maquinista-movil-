@@ -1,6 +1,4 @@
-import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/projectos.dart';
-import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
 import 'custom_widgets/project_cards.dart';
@@ -8,22 +6,26 @@ import 'custom_widgets/line_painter.dart';
 import 'model/net/net_monlautech.dart';
 import 'project_individual_layout.dart';
 
-import 'model/net/net_projects.dart';
 import 'model/dinamicTest.dart';
-import 'custom_widgets/carrousel_img.dart';
 
 class ProjectsLayout extends StatefulWidget {
-  ProjectsLayout({super.key, required this.projects, required this.proj_mng, required this.monlauTech_mng, required this.monlauTechPrj});
+  ProjectsLayout({
+    super.key,
+    required this.projects,
+    required this.proj_mng,
+    required this.monlauTech_mng,
+    required this.monlauTechPrj,
+  });
   NetProjects proj_mng;
   List<Proyecto> projects;
   NetMonalautech monlauTech_mng;
   List<DinamicTest> monlauTechPrj;
   int current = 1;
   ScrollController scController = ScrollController();
+
   @override
   _ProjectsLayout createState() => _ProjectsLayout();
 }
-
 
 class _ProjectsLayout extends State<ProjectsLayout>
     with SingleTickerProviderStateMixin {
@@ -35,38 +37,45 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "CFGM Carrocería",
     "CFGM Motocicletas"
   ];
-  List<Proyecto> filteredProjectos = [];
+  List<Proyecto> filteredProjects = [];
 
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
 
+  @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    filteredProjectos = widget.projects;
+    filteredProjects = widget.projects; // Inicializar con todos los proyectos
     _searchController.addListener(_filterProjectos);
+    widget.scController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     _searchController.dispose();
+    widget.scController.removeListener(_onScroll);
+    widget.scController.dispose();
     super.dispose();
   }
 
+  // Filtrar proyectos basados en el texto de búsqueda
   void _filterProjectos() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      filteredProjectos = widget.projects.where((project) {
+      filteredProjects = widget.projects.where((project) {
         final title = project.Titulo.toLowerCase();
-        final description = project.Autor.toString().toLowerCase();
-        return title.contains(query) || description.contains(query);
+        final author = project.Autor.toString().toLowerCase();
+        return title.contains(query) || author.contains(query);
       }).toList();
     });
   }
 
+  // Cargar más proyectos cuando se llega al final de la lista
   void _onScroll() {
-    if (widget.scController.position.pixels >= widget.scController.position.maxScrollExtent) {
+    if (widget.scController.position.pixels >=
+        widget.scController.position.maxScrollExtent) {
       _loadMoreProjects();
     }
   }
@@ -77,6 +86,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
       if (newProjects.isNotEmpty) {
         setState(() {
           widget.projects.addAll(newProjects);
+          _filterProjectos(); // Aplicar filtro a los nuevos proyectos
           widget.current++;
         });
       }
@@ -84,30 +94,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   @override
-  void disposeSC() {
-    widget.scController.removeListener(_onScroll);
-    widget.scController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    widget.scController.addListener(() {
-      if ((widget.scController.position.minScrollExtent < widget.scController.position.pixels &&
-          widget.scController.position.maxScrollExtent - 100 > widget.scController.position.pixels)) {
-        setState(() {
-          widget.proj_mng.get_page(widget.current).then((proj) {
-            if (widget.current <= widget.proj_mng.available_pages) {
-              print("projectos ");
-              print(proj);
-              widget.projects.addAll(proj);
-              widget.current++;
-              print("actual page " + widget.current.toString());
-            }
-          });
-        });
-      }
-    });
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -130,8 +117,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                           Container(
                             decoration: const BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.transparent)),
+                                  bottom: BorderSide(color: Colors.transparent)),
                             ),
                             child: TabBar(
                               controller: _tabController,
@@ -144,13 +130,12 @@ class _ProjectsLayout extends State<ProjectsLayout>
                                   horizontal: 10, vertical: 0),
                               isScrollable: true,
                               tabAlignment: TabAlignment.start,
-                              tabs: [
+                              tabs: const [
                                 Tab(text: "Proyectos"),
                                 Tab(text: "MonlauTech"),
                               ],
                             ),
                           ),
-                          //const SizedBox(width: 110),
                         ],
                       ),
                     ),
@@ -158,7 +143,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                       value: _filter.contains(_filterSelectOption)
                           ? _filterSelectOption
                           : null,
-                      hint: Text("Selecciona una opción"),
+                      hint: const Text("Selecciona una opción"),
                       icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                       dropdownColor: Colors.white,
                       style: const TextStyle(color: Colors.black),
@@ -174,7 +159,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                           child: Text(value, style: const TextStyle(color: Colors.black)),
                         );
                       }).toList(),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -183,7 +168,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                   CustomPaint(
                     size: Size(100, 10),
                     painter: LinePainter(),
-                  )
+                  ),
                 ],
               ),
               Padding(
@@ -200,9 +185,10 @@ class _ProjectsLayout extends State<ProjectsLayout>
                 ),
               ),
               Expanded(
-                  child: TabBarView(
-                      controller: _tabController,
-                      children: [_projects(), _monlauTech()])
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [_projects(), _monlauTech()],
+                ),
               ),
             ],
           ),
@@ -212,57 +198,52 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   Widget _projects() {
-    return SafeArea(
-      child: Expanded(
-          child: ListView.builder(
-        controller: widget.scController,
-        padding: EdgeInsets.zero,
-        itemCount: widget.projects.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProjectIndividualLayout(
-                            project: widget.projects[index],
-                          )));
-            },
-            child: ProjectCards(
-              projecto: widget.projects[index],
-            ),
-          );
-        },
-      )),
+    return ListView.builder(
+      controller: widget.scController,
+      padding: EdgeInsets.zero,
+      itemCount: filteredProjects.length, // Usar la lista filtrada
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectIndividualLayout(
+                  project: filteredProjects[index], // Usar la lista filtrada
+                ),
+              ),
+            );
+          },
+          child: ProjectCards(
+            projecto: filteredProjects[index], // Usar la lista filtrada
+          ),
+        );
+      },
     );
   }
 
   Widget _monlauTech() {
-    return SafeArea(
-      child: Column(
-        children: [
-              ListView.builder(
-                controller: widget.scController,
-                padding: EdgeInsets.zero,
-                itemCount: widget.monlauTechPrj.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProjectIndividualLayout(
-                                project: widget.monlauTechPrj[index],
-                              )));
-                    },
-                    child: ProjectCards(
-                      projecto: widget.monlauTechPrj[index],
-                    ),
-                  );
-                },
+    return ListView.builder(
+      controller: widget.scController,
+      padding: EdgeInsets.zero,
+      itemCount: widget.monlauTechPrj.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectIndividualLayout(
+                  project: widget.monlauTechPrj[index],
+                ),
               ),
-        ],
-      )
+            );
+          },
+          child: ProjectCards(
+            projecto: widget.monlauTechPrj[index],
+          ),
+        );
+      },
     );
   }
 }
