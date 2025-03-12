@@ -33,8 +33,6 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
 
   @override
   Widget build(BuildContext context) {
-    final String titlePrj = "Title Project";
-
     return Scaffold(
       body: SafeArea(
         child: Column(

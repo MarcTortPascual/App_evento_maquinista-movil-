@@ -29,6 +29,8 @@ class ProjectCards extends StatelessWidget {
                 Text(projecto.Titulo, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                 const SizedBox(height: 5),
                 Text(projecto.Autor[0].name, style: TextStyle(fontSize: 14, color: Colors.white)),
+                const SizedBox(height: 5),
+                Text(projecto.NivelEstudios, style: TextStyle(fontSize: 14, color: Colors.white)),
               ],
             ),
           ),
