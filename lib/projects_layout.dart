@@ -32,10 +32,10 @@ class _ProjectsLayout extends State<ProjectsLayout>
   String _filterSelectOption = "Todos";
   final List<String> _filter = [
     "Todos",
-    "CFGS Automación",
-    "CFGM Electromecánica",
-    "CFGM Carrocería",
-    "CFGM Motocicletas"
+    "GS Automoción",
+    "GM Electromecánica",
+    "GM Carrocería",
+    "GM Motocicletas"
   ];
   List<Proyecto> filteredProjects = [];
 
@@ -60,14 +60,22 @@ class _ProjectsLayout extends State<ProjectsLayout>
     super.dispose();
   }
 
-  // Filtrar proyectos basados en el texto de búsqueda
+  // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
   void _filterProjectos() {
     final query = _searchController.text.toLowerCase();
     setState(() {
       filteredProjects = widget.projects.where((project) {
         final title = project.Titulo.toLowerCase();
         final author = project.Autor.toString().toLowerCase();
-        return title.contains(query) || author.contains(query);
+
+        // Aplicar filtro de búsqueda
+        final matchesSearch = title.contains(query) || author.contains(query);
+
+        // Aplicar filtro del DropdownButton
+        final matchesFilter = _filterSelectOption == "Todos" ||
+            project.NivelEstudios == _filterSelectOption;
+
+        return matchesSearch && matchesFilter;
       }).toList();
     });
   }
@@ -151,6 +159,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                       onChanged: (String? newValue) {
                         setState(() {
                           _filterSelectOption = newValue!;
+                          _filterProjectos(); // Aplicar filtro cuando cambia la selección
                         });
                       },
                       items: _filter.map<DropdownMenuItem<String>>((String value) {

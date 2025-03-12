@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Card(
                               elevation: 4,
                               child: Container(
-                                width: 150,
+                                width: 250,
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
