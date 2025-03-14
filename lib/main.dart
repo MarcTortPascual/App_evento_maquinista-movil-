@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:app_maquinista/custom_widgets/pop_up_speaker_card.dart';
 import 'package:app_maquinista/model/net/net_monlautech.dart';
 import 'package:app_maquinista/project_individual_layout.dart';
 
-import 'custom_widgets/carrousel_prj.dart';
 import 'custom_widgets/custom_card.dart';
 import 'custom_widgets/line_painter.dart';
 
@@ -28,7 +26,6 @@ import 'speakers_layout.dart';
 import 'title_section.dart';
 
 import 'package:flutter/material.dart';
-import 'model/dinamicTest.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -88,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
-  final int _currentIndex = 0; // Guardará el índice del carrusel
 
   void _onItemTapped(int index) {
     setState(() {
@@ -189,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 200, // Altura fija para el ListView horizontal
+                    height: 130, // Altura fija para el ListView horizontal
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: projectos.length,
@@ -210,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               elevation: 4,
                               child: Container(
                                 width: 250,
-                                padding: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
