@@ -103,11 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _homeScreen(),
-          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: monlautech,),
+          ProjectsLayout(projects: projectos,proj_mng: proj_mng, monlauTech_mng: mont_mng, monlauTechPrj: monlautech),
           MapLayout(),
-          SpeakersLayout(
-            ponencias: meets,
-          ),
+          SpeakersLayout(ponencias: meets),
           ExhibitorsLayout(),
         ],
       ),

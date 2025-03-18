@@ -1,7 +1,6 @@
 import 'package:app_maquinista/custom_widgets/Pdfview.dart';
 import 'package:app_maquinista/custom_widgets/cv_card.dart';
 import 'package:app_maquinista/custom_widgets/cv_pdf_view.dart';
-import 'package:app_maquinista/main.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +112,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
                 return InkWell(
                     onTap: () {
                       showDialog(context: context, builder: (BuildContext context) {
-                        return CvPdfView(url: widget.project.Autor[index].cvLink, index: index,);
+                        return CvPdfView(url: widget.project.Autor[index].cvLink, /*index: index,*/);
                       });
                     },
                     child: CVCard(

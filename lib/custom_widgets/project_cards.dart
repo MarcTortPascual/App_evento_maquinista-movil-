@@ -11,6 +11,9 @@ class ProjectCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //String names = projecto.Autor.join();
+
     return Card(
       color: Colors.black,
       shape: RoundedRectangleBorder(
