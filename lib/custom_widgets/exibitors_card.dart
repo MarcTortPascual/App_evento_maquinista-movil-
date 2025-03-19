@@ -1,17 +1,15 @@
+import 'package:app_maquinista/model/companies.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExibitorsCard extends StatelessWidget {
-  final String name;
-  final String description;
-  final String hour;
-  final String location;
+  
+  Companies  company;
 
-  const ExibitorsCard(
-      {super.key,
-      required this.name,
-      required this.description,
-      required this.hour,
-      required this.location});
+  ExibitorsCard({
+    super.key,
+    required this.company
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +21,27 @@ class ExibitorsCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(this.name, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(company.name, style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
             ],
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(this.description)
+              InkWell(
+                child: Text("Web: ${company.web}", style: TextStyle(color:Colors.white),),
+                onTap: () => launchUrl(Uri.parse(company.web)) ,
+              )
             ],
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(this.hour, style: TextStyle(fontWeight: FontWeight.bold))
+              Image.network(company.img_url,height: 100 , width: 100,errorBuilder: (context, error, stackTrace) {
+                return Icon(Icons.image_not_supported_rounded,size: 100,color: Colors.white,);
+              },)
             ],
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(this.location, style: TextStyle(fontWeight: FontWeight.bold))
-            ],
-          )
+          
         ],
       ),
     );

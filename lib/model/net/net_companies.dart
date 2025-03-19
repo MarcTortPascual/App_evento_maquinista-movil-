@@ -1,4 +1,3 @@
-
 import 'package:app_maquinista/model/companies.dart';
 import 'package:app_maquinista/model/net/Netload.dart';
 import 'package:app_maquinista/model/projectos.dart';
@@ -7,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class NetCompanies extends Netload<Companies> {
-  NetCompanies(int limit) :super(limit,"companiesPages","companies");
+  NetCompanies(int limit) :super(limit,"companiesPages","projects");
 
 
   // Obtener página
