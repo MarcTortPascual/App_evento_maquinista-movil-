@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class NetCompanies extends Netload<Companies> {
-  NetCompanies(int limit) :super(limit,"companiesPages","projects");
+  NetCompanies(int limit) :super(limit,"companiesPages","companies");
 
 
   // Obtener página
