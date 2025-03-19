@@ -1,3 +1,6 @@
+import 'package:app_maquinista/homePage.dart';
+import 'package:app_maquinista/model/net/Netload.dart';
+import 'package:app_maquinista/model/net/net_filter_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/net/net_projects.dart';
@@ -16,9 +19,11 @@ class ProjectsLayout extends StatefulWidget {
     required this.monlauTechPrj,
   });
 
-  final NetProjects proj_mng;
-  final List<Proyecto> projects;
-  final NetMonalautech monlauTech_mng;
+  Netload proj_mng;
+  NetFilterProjects filter_mng = NetFilterProjects(7);
+  List<Proyecto> projects;
+
+  Netload monlauTech_mng;
   final List<DinamicTest> monlauTechPrj;
   int current = 1;
   final ScrollController scController = ScrollController();
@@ -41,13 +46,14 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
-
+  
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     filteredProjects = widget.projects; // Inicializar con todos los proyectos
-    _searchController.addListener(_filterProjectos);
+    _searchController.addListener(()=>_filterProjectos());
+   
     widget.scController.addListener(_onScroll);
   }
 
@@ -55,32 +61,32 @@ class _ProjectsLayout extends State<ProjectsLayout>
   void dispose() {
     _tabController.dispose();
     _searchController.dispose();
+
     widget.scController.removeListener(_onScroll);
     widget.scController.dispose();
     super.dispose();
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
-  void _filterProjectos() {
+  void _filterProjectos( ) {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      filteredProjects = widget.projects.where((project) {
-        final title = project.Titulo.toLowerCase();
-        /*for (int i = 0; i < project.Autor.length; i++) {
-          final author = project.Autor[i].name.toLowerCase();
-        }*/
-        final author = project.Autor[0].name.toLowerCase();
-
-
-        // Aplicar filtro de búsqueda
-        final matchesSearch = title.contains(query) || author.contains(query);
-
-        // Aplicar filtro del DropdownButton
-        final matchesFilter = _filterSelectOption == "Todos" ||
-            project.NivelEstudios == _filterSelectOption;
-
-        return matchesSearch && matchesFilter;
-      }).toList();
+        if (query.isNotEmpty){
+          widget.projects.clear();
+          widget.filter_mng.where = "title";
+          widget.filter_mng.value = query;
+          widget.filter_mng.get_page(1).then((projs){
+            widget.projects.addAll(projs);
+          });
+          widget.filter_mng.where = "student";
+          widget.filter_mng.value = query;
+          widget.filter_mng.get_page(1).then((projs){
+            widget.projects.addAll(projs);
+          });
+          
+          widget.current = 1;
+          widget.proj_mng = widget.filter_mng;
+        }
     });
   }
 
@@ -94,11 +100,18 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   Future<void> _loadMoreProjects() async {
     if (widget.current <= widget.proj_mng.available_pages) {
-      List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current);
+      
+      List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current) as List<Proyecto>;
+      print(newProjects);
       if (newProjects.isNotEmpty) {
         setState(() {
-          widget.projects.addAll(newProjects);
-          _filterProjectos(); // Aplicar filtro a los nuevos proyectos
+          if (proj_mng is NetFilterProjects){
+            widget.projects = newProjects;
+          }else{
+            widget.projects.addAll(newProjects);
+          }
+          
+  
           widget.current++;
         });
       }
@@ -192,7 +205,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Buscar proyectos...',
+                    hintText: 'Buscar por titulo',
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -200,6 +213,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
                   ),
                 ),
               ),
+             
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
@@ -217,7 +231,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     return ListView.builder(
       controller: widget.scController,
       padding: EdgeInsets.zero,
-      itemCount: filteredProjects.length, // Usar la lista filtrada
+      itemCount: widget.projects.length, // Usar la lista filtrada
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
@@ -225,13 +239,13 @@ class _ProjectsLayout extends State<ProjectsLayout>
               context,
               MaterialPageRoute(
                 builder: (context) => ProjectIndividualLayout(
-                  project: filteredProjects[index], // Usar la lista filtrada
+                  project: widget.projects[index], // Usar la lista filtrada
                 ),
               ),
             );
           },
           child: ProjectCards(
-            projecto: filteredProjects[index], // Usar la lista filtrada
+            projecto:widget.projects[index], // Usar la lista filtrada
           ),
         );
       },

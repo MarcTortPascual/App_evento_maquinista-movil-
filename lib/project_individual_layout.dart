@@ -96,6 +96,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
   }
 
   Widget _buildMemorySection() {
+    print(widget.project.MemoriaUrl);
     return Scaffold(body: PDFview(url: widget.project.MemoriaUrl));
   }
 

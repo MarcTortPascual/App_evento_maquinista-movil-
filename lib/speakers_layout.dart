@@ -2,6 +2,7 @@ import 'package:app_maquinista/custom_widgets/line_painter.dart';
 import 'package:app_maquinista/custom_widgets/pop_up_speaker_card.dart';
 import 'package:app_maquinista/custom_widgets/speakers_card.dart';
 import 'package:app_maquinista/model/meetings.dart';
+import 'package:app_maquinista/model/speakers.dart';
 import 'package:flutter/material.dart';
 
 class SpeakersLayout extends StatefulWidget {

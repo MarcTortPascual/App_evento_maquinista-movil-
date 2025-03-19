@@ -10,7 +10,8 @@ import 'package:http/http.dart' as http;
 //clase para manejar la carga de los datos desde una api
 
 abstract class Netload<T>{
-  String server = ""; //direcion del servidor
+  String serverapi = ""; //direcion del servidor
+  String server = "";
   String token = ""; //token de la api
   String pages_endpoint =""; //enpoint para obtener las pagina de los datos a consultar
   String items_endpoit = ""; //endpoint para cargar los datos
@@ -20,6 +21,7 @@ abstract class Netload<T>{
   // Cargar configuración direcion del servidor y el token de la api
   Future<void> loadEnv() async {
     await dotenv.load(fileName:"assets/conf.env");
+    serverapi = dotenv.get('SERVERAPI');
     server = dotenv.get('SERVER');
     token = dotenv.get('TOKEN');
   }
@@ -42,7 +44,7 @@ abstract class Netload<T>{
       "Authorization": "Bearer $token",
     };
     final response = await http.get(
-        Uri.parse( "$server/$pages_endpoint/"+limit.toString()),
+        Uri.parse( "$serverapi/$pages_endpoint/"+limit.toString()),
 
         headers: headers
     );
@@ -60,7 +62,7 @@ abstract class Netload<T>{
       "Authorization": "Bearer $token",
     };
     final response = await http.get(
-      Uri.parse("$server/$items_endpoit/$limit/$page"),
+      Uri.parse("$serverapi/$items_endpoit/$limit/$page"),
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -69,7 +71,7 @@ abstract class Netload<T>{
       return decodedProjects;
 
     } else {
-      print("Ruta pag: $server/$items_endpoit/$limit/$page");
+      print("Ruta pag: $serverapi/$items_endpoit/$limit/$page");
       throw Exception("Error al obtener proyectos: ${response.body}");
     }
   }
