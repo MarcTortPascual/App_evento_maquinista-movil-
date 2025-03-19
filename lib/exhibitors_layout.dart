@@ -1,7 +1,8 @@
 import 'package:app_maquinista/custom_widgets/exibitors_card.dart';
 import 'package:flutter/material.dart';
-
 import 'custom_widgets/line_painter.dart';
+import 'homePage.dart';
+import 'model/companies.dart';
 import 'model/projectos.dart';
 
 class ExhibitorsLayout extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:app_maquinista/project_individual_layout.dart';
 import 'custom_widgets/custom_card.dart';
 import 'custom_widgets/line_painter.dart';
 
+import 'custom_widgets/pop_up_speaker_card.dart';
 import 'exhibitors_layout.dart';
 
 import 'model/companies.dart';
