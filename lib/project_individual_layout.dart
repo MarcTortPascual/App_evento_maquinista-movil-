@@ -1,6 +1,6 @@
 import 'package:app_maquinista/custom_widgets/Pdfview.dart';
 import 'package:app_maquinista/custom_widgets/cv_card.dart';
-import 'package:app_maquinista/homePage.dart';
+import 'package:app_maquinista/custom_widgets/cv_pdf_view.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,8 @@ class ProjectIndividualLayout extends StatefulWidget {
       _ProjectIndividualLayoutState();
 }
 
-class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with SingleTickerProviderStateMixin {
+class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -39,18 +40,20 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
           children: [
             SizedBox(
               height: 300,
-              child:  Builder(builder: (context) {
-                    
-                    //validamos que sea un video de yt
-                    if (widget.project.VideoUrl.contains("youtube.com")){
-                      return Ytvideo(videoUrl: widget.project.VideoUrl,is_muted: false, );
-                    }else{
-                      return Icon(Icons.videocam_off, size: 150,);
-                    }
-
-                  }
-
-                  ),
+              child: Builder(builder: (context) {
+                //validamos que sea un video de yt
+                if (widget.project.VideoUrl.contains("youtube.com")) {
+                  return Ytvideo(
+                    videoUrl: widget.project.VideoUrl,
+                    is_muted: false,
+                  );
+                } else {
+                  return Icon(
+                    Icons.videocam_off,
+                    size: 150,
+                  );
+                }
+              }),
             ),
             TabBar(
               controller: _tabController,
@@ -108,12 +111,15 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
               itemCount: widget.project.Autor.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(context: context, builder: (BuildContext context) {
+                        return CvPdfView(url: widget.project.Autor[index].cvLink, /*index: index,*/);
+                      });
+                    },
                     child: CVCard(
                       imagePath: widget.project.Autor[index].photoName,
                       name: widget.project.Autor[index].get_all_name(),
-                    )
-                );
+                    ));
               },
             ),
           ),
@@ -123,8 +129,8 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout> with 
   }
 
   _goToEvaluate() async {
-    final Uri _url = Uri.parse(widget.project.UrlEvaluation);
-    if (!await launchUrl(_url)) {
+    final Uri url = Uri.parse(widget.project.UrlEvaluation);
+    if (!await launchUrl(url)) {
       throw Exception("Don't work");
     }
   }

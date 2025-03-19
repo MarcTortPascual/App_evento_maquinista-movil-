@@ -151,8 +151,8 @@ class _ProjectsLayout extends State<ProjectsLayout>
                               indicatorColor: Colors.blue,
                               labelColor: Colors.blue,
                               unselectedLabelColor: Colors.grey,
-                              labelPadding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 0),
+                              labelPadding: EdgeInsets.symmetric(
+                                  horizontal: MediaQuery.of(context).size.width * 0.02, vertical: 0),
                               isScrollable: true,
                               tabAlignment: TabAlignment.start,
                               tabs: const [
@@ -164,28 +164,31 @@ class _ProjectsLayout extends State<ProjectsLayout>
                         ],
                       ),
                     ),
-                    DropdownButton<String>(
-                      value: _filter.contains(_filterSelectOption)
-                          ? _filterSelectOption
-                          : null,
-                      hint: const Text("Selecciona una opción"),
-                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                      dropdownColor: Colors.white,
-                      style: const TextStyle(color: Colors.black),
-                      underline: Container(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _filterSelectOption = newValue!;
-                          //_filterProjectos(); // Aplicar filtro cuando cambia la selección
-                        });
-                      },
-                      items: _filter.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value, style: const TextStyle(color: Colors.black)),
-                        );
-                      }).toList(),
-                    ),
+                    Padding(
+                        padding: EdgeInsets.only(right: 10),
+                      child: DropdownButton<String>(
+                        value: _filter.contains(_filterSelectOption)
+                            ? _filterSelectOption
+                            : null,
+                        hint: const Text("Selecciona una opción"),
+                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                        dropdownColor: Colors.white,
+                        style: const TextStyle(color: Colors.black),
+                        underline: Container(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _filterSelectOption = newValue!;
+                            _filterProjectos(); // Aplicar filtro cuando cambia la selección
+                          });
+                        },
+                        items: _filter.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value, style: const TextStyle(color: Colors.black)),
+                          );
+                        }).toList(),
+                      ),
+                    )
                   ],
                 ),
               ),

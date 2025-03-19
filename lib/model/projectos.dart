@@ -134,6 +134,10 @@ class Proyecto {
     autor = value;
   }
 
+  String get_all_members() {
+    return Autor.join(", ");
+  }
+
   String get Titulo => titulo;
 
   set Titulo(String value) {

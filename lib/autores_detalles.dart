@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/custom_widgets/Pdfview.dart' as PDF;
+
 class Students_detail_page extends StatelessWidget{
   Students_detail_page({
     super.key,

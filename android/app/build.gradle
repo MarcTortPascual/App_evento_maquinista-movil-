@@ -33,13 +33,13 @@ android {
 
     	release {
 
-        	keyAlias 'automocion2025'
+        	keyAlias 'upload'
 
-        	keyPassword 'automocion2025'
+        	keyPassword 'Monlau2023.'
 
         	storeFile file('keystore.jks')
 
-        	storePassword 'automocion2025'
+        	storePassword 'Monlau2023.'
 
     	}
 
