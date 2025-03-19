@@ -12,8 +12,6 @@ class ProjectCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    //String names = projecto.Autor.join();
-
     return Card(
       color: Colors.black,
       shape: RoundedRectangleBorder(
@@ -31,7 +29,8 @@ class ProjectCards extends StatelessWidget {
               children: [
                 Text(projecto.Titulo, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                 const SizedBox(height: 5),
-                Text(projecto.Autor[0].name, style: TextStyle(fontSize: 14, color: Colors.white)),
+                Text(projecto.Autor[0].get_all_name(), style: TextStyle(fontSize: 14, color: Colors.white)),
+                //Text(projecto.get_all_members(), style: TextStyle(fontSize: 14, color: Colors.white)),
                 const SizedBox(height: 5),
                 Text(projecto.NivelEstudios, style: TextStyle(fontSize: 14, color: Colors.white)),
               ],

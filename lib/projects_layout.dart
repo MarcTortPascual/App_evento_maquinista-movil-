@@ -176,7 +176,6 @@ class _ProjectsLayout extends State<ProjectsLayout>
                         }).toList(),
                       ),
                     )
-
                   ],
                 ),
               ),
