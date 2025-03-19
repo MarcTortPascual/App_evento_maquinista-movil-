@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SpeakersLayout(
             ponencias: meets,
           ),
-          ExhibitorsLayout(),
+          ExhibitorsLayout(companies: companies,),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -268,7 +268,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      // SpeakersPopUpCArd(speakers: meets[index,);
+                      showDialog(context: context, builder: (BuildContext context) {
+                        return SpeakersPopUpCArd(speakers: meets[index].speakers[0]);
+                      });
                     },
                     child: CustomCard(
                         title: meets[index].name ?? "Título por defecto",

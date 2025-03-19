@@ -1,4 +1,5 @@
 import 'package:app_maquinista/custom_widgets/exibitors_card.dart';
+import 'package:app_maquinista/homePage.dart';
 import 'package:app_maquinista/model/companies.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,10 @@ import 'custom_widgets/line_painter.dart';
 import 'model/projectos.dart';
 
 class ExhibitorsLayout extends StatefulWidget {
-  ExhibitorsLayout({super.key});
+  ExhibitorsLayout({super.key,required this.companies});
   @override
   _ExhibitorsLayout createState() => _ExhibitorsLayout();
+  List<Companies> companies;
 }
 
 class _ExhibitorsLayout extends State<ExhibitorsLayout> {
@@ -64,7 +66,7 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                   Expanded(
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
-                        //itemCount: ,
+                        itemCount: companies.length ,
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
@@ -72,7 +74,7 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                             },
                             child:
                             ExibitorsCard(
-                              name: '', description: '', hour: '', location: '',
+                              company: companies[index],
                             ),
                           );
                         },
