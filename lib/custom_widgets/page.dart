@@ -1,4 +1,4 @@
-import 'package:app_maquinista/main.dart';
+import 'package:app_maquinista/homePage.dart';
 import 'package:flutter/material.dart';
 class PageMaquinista extends StatelessWidget{
   PageMaquinista({
