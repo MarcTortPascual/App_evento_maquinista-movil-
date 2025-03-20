@@ -68,25 +68,17 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
-  void _filterProjectos( ) {
+  void _filterProjectos( ) async {
     final query = _searchController.text.toLowerCase();
+    widget.filter_mng.value = query;
+    widget.filter_mng.where = "title";
+    
+    List<Proyecto> projs =  await widget.filter_mng.get_page(1);
+    widget.filter_mng.where = "student";
+    projs.addAll(await widget.filter_mng.get_page(1));
+         
     setState(() {
-        if (query.isNotEmpty){
-          widget.projects.clear();
-          widget.filter_mng.where = "title";
-          widget.filter_mng.value = query;
-          widget.filter_mng.get_page(1).then((projs){
-            widget.projects.addAll(projs);
-          });
-          widget.filter_mng.where = "student";
-          widget.filter_mng.value = query;
-          widget.filter_mng.get_page(1).then((projs){
-            widget.projects.addAll(projs);
-          });
-          
-          widget.current = 1;
-          widget.proj_mng = widget.filter_mng;
-        }
+        widget.projects = projs;
     });
   }
 
