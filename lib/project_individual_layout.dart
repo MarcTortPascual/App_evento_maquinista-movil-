@@ -113,7 +113,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
                 return InkWell(
                     onTap: () {
                       showDialog(context: context, builder: (BuildContext context) {
-                        return CvPdfView(url: widget.project.Autor[index].cvLink, /*index: index,*/);
+                        return CvPdfView(url: /*widget.project.Autor[index].cvLink*/ widget.project.MemoriaUrl);
                       });
                     },
                     child: CVCard(

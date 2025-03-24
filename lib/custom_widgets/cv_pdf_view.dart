@@ -3,9 +3,8 @@ import 'Pdfview.dart';
 
 class CvPdfView extends StatelessWidget {
   String url;
-  //int index;
 
-  CvPdfView({super.key, required this.url, /*required this.index*/});
+  CvPdfView({super.key, required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +15,13 @@ class CvPdfView extends StatelessWidget {
         elevation: 10,
         backgroundColor: Colors.white,
         child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(6),
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                  PDFview(url: url)
+                Expanded(child: PDFview(url: url))
               ],
         ),
         )

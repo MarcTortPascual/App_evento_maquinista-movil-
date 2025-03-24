@@ -16,7 +16,7 @@ class ExibitorsCard extends StatelessWidget {
     return Card(
       color: Colors.black,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      child: Column(
+      child: Row(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,6 @@ class ExibitorsCard extends StatelessWidget {
               },)
             ],
           ),
-          
         ],
       ),
     );
