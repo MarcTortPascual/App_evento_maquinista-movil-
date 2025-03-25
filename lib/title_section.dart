@@ -14,12 +14,12 @@ class TitleSection extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(13.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 150,
@@ -35,7 +35,7 @@ class TitleSection extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(width: screenWidth * 0.25), // Separador entre el título y el subtítulo
+          SizedBox(width: screenWidth * 0.27), // Separador entre el título y el subtítulo
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -50,9 +50,9 @@ class TitleSection extends StatelessWidget {
                   fontSize: 17,
                 ),
               ),
-            ),],
+            ),
+            ],
           )
-
         ],
       ),
     );
