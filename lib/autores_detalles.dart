@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:app_maquinista/model/students.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/custom_widgets/Pdfview.dart' as PDF;
+
 class Students_detail_page extends StatelessWidget{
   Students_detail_page({
     super.key,
@@ -26,7 +27,10 @@ class Students_detail_page extends StatelessWidget{
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child:  Image.network(student.photoName, width: 100, height: 100,),
+                      child:  Image.network(student.photoName, width: 100, height: 100,errorBuilder:
+                          (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return const Icon(Icons.image,size: 50);
+                      },)
                     ),
 
                     Text(student.get_all_name(),)

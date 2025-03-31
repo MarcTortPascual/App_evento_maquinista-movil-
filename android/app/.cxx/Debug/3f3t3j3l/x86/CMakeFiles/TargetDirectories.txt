@@ -1,0 +1,2 @@
+/home/mtcraft22/Documentos/monlau/m8/app_maquinista (copia)/android/app/.cxx/Debug/3f3t3j3l/x86/CMakeFiles/edit_cache.dir
+/home/mtcraft22/Documentos/monlau/m8/app_maquinista (copia)/android/app/.cxx/Debug/3f3t3j3l/x86/CMakeFiles/rebuild_cache.dir

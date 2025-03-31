@@ -16,6 +16,7 @@ class DinamicTest extends Proyecto{
       String videoUrl,
       String memoriaUrl,
       String fotoAutorUrl,
+      String urlEvaluation
   ) :  super(
     id,
     titulo,
@@ -28,6 +29,7 @@ class DinamicTest extends Proyecto{
     videoUrl,
     memoriaUrl,
     fotoAutorUrl,
+    urlEvaluation,
   );
   factory DinamicTest.fromJson (Map<String, dynamic> project, String server ){
 
@@ -58,9 +60,10 @@ class DinamicTest extends Proyecto{
       project["specialization"]??" ",
       project["abstract"]??" ",
       "$server/storage/photos/"+(project['photoName']??" "),
-      "$server/storage/videos/"+(project['videoURL']??" "),
+      project['videoURL'],
       "$server/storage/pdfs/"+(project['pdfURL']??" "),
       "$server/storage/photos/"+(project['photoName']??" "),
+      project["moodleURL"]
     );
   }
 }

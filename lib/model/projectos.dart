@@ -27,6 +27,8 @@ class Proyecto {
   String memoriaUrl;
   @protected
   String fotoAutorUrl;
+  @protected
+  String urlEvaluation;
 
 
   Proyecto(this.id,
@@ -39,7 +41,8 @@ class Proyecto {
       this.imagenUrl,
       this.videoUrl,
       this.memoriaUrl,
-      this.fotoAutorUrl,);
+      this.fotoAutorUrl,
+      this.urlEvaluation);
 
   factory Proyecto.fromJson (Map<String, dynamic> project, String server ){
 
@@ -70,12 +73,13 @@ class Proyecto {
     project["specialization"]??" ",
     project["abstract"]??" ",
     "$server/storage/photos/"+(project['photoName']??" "),
-    "$server/storage/videos/"+(project['videoURL']??" "),
+    project['videoURL'],
     "$server/storage/pdfs/"+(project['pdfURL']??" "),
     "$server/storage/photos/"+(project['photoName']??" "),
+    project["moodleURL"]
   );
 }
-
+  String get UrlEvaluation => urlEvaluation;
   String get FotoAutorUrl => fotoAutorUrl;
 
   set FotoAutorUrl(String value) {
@@ -128,6 +132,10 @@ class Proyecto {
 
   set Autor(List<Estudents> value) {
     autor = value;
+  }
+
+  String get_all_members() {
+    return Autor.join(", ");
   }
 
   String get Titulo => titulo;
