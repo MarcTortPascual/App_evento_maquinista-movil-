@@ -11,7 +11,10 @@ class MapLayout extends StatefulWidget {
 
 class _MapLayout extends State<MapLayout> {
 
-  final List<String> imgEvent = [''];
+  final List<String> imgEvent = [
+    'assets/img/monlautech1.jpg','assets/img/monlautech2.jpg','assets/img/monlautech3.jpg',
+    'assets/img/monlautech4.jpg','assets/img/monlautech5.jpg','assets/img/monlautech6.jpg'
+  ];
 
   @override
   Widget build(BuildContext context) {
