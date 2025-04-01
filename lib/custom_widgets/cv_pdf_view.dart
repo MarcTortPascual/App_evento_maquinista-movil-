@@ -17,7 +17,7 @@ class CvPdfView extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.all(6),
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.55,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
