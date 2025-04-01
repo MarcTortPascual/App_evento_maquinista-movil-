@@ -3,8 +3,6 @@ import 'package:app_maquinista/model/net/Netload.dart';
 import 'package:app_maquinista/model/net/net_filter_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/projectos.dart';
-import 'package:app_maquinista/model/net/net_projects.dart';
-import 'package:app_maquinista/model/net/net_monlautech.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';

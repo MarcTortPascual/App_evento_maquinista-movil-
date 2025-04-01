@@ -72,7 +72,9 @@ class _SpeakersLayout extends State<SpeakersLayout> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          //SpeakersPopUpCArd(speakers: );
+                          showDialog(context: context, builder: (BuildContext context) {
+                            return SpeakersPopUpCArd(speakers: widget.ponencias[index].speakers[0]);
+                          });
                         },
                         child:
                         SpeakerCard(

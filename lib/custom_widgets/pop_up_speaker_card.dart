@@ -20,7 +20,7 @@ class SpeakersPopUpCArd extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width * 0.8,
-        height: 500,
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
