@@ -6,6 +6,7 @@ import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
 import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
+import 'model/net/net_projects.dart';
 import 'project_individual_layout.dart';
 
 class ProjectsLayout extends StatefulWidget {
