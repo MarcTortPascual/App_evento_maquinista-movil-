@@ -18,7 +18,9 @@ class ProjectsLayout extends StatefulWidget {
   });
 
   Netload proj_mng;
-  NetFilterProjects filter_mng = NetFilterProjects(7);
+  NetProjects proj_all = NetProjects(0,"","");
+  NetFilterProjects filter_mng_students = NetFilterProjects(7);
+  NetFilterProjects filter_mng_tittle = NetFilterProjects(7);
   List<Proyecto> projects;
 
   Netload monlauTech_mng;
@@ -44,10 +46,18 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
-  
+  List<Proyecto> filtrar (List<Proyecto> prjs){
+    if (_filterSelectOption != "Todos"){
+      return prjs.where((test) => test.NivelEstudios == _filterSelectOption).toList();
+    }else{
+      return prjs;
+    }
+  }
   @override
   void initState() {
     super.initState();
+    widget.proj_all = proj_mng;
+
     _tabController = TabController(length: 2, vsync: this);
     filteredProjects = widget.projects; // Inicializar con todos los proyectos
     _searchController.addListener(()=>_filterProjectos());
@@ -66,53 +76,61 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
-  void _filterProjectos( ) {
+  void _filterProjectos( ) async {
     final query = _searchController.text.toLowerCase();
-    setState(() {
-        if (query.isNotEmpty){
-          widget.projects.clear();
-          widget.filter_mng.where = "title";
-          widget.filter_mng.value = query;
-          widget.filter_mng.get_page(1).then((projs){
-            widget.projects.addAll(projs);
-          });
-          widget.filter_mng.where = "student";
-          widget.filter_mng.value = query;
-          widget.filter_mng.get_page(1).then((projs){
-            widget.projects.addAll(projs);
-          });
-          
-          widget.current = 1;
-          widget.proj_mng = widget.filter_mng;
-        }
-    });
+    if (query.isNotEmpty){
+      List<Proyecto> projs = [];
+      widget.current = 1;
+      
+      widget.filter_mng_tittle.value = query;
+      widget.filter_mng_students.value = query;
+      widget.filter_mng_tittle.where = "title";
+      widget.filter_mng_students.where = "student";
+      projs.addAll(await widget.filter_mng_tittle.get_page(1));
+      projs.addAll(await widget.filter_mng_students.get_page(1));
+      setState(() {
+          widget.projects = filtrar(projs);
+      });
+    }else{
+      widget.current = 1;
+      widget.proj_mng = widget.proj_all;
+      widget.projects = widget.projects = filtrar(await widget.proj_mng.get_page(1) as List<Proyecto>);
+      
+    }
+    
   }
 
   // Cargar más proyectos cuando se llega al final de la lista
   void _onScroll() {
-    if (widget.scController.position.pixels >=
-        widget.scController.position.maxScrollExtent) {
+    if (widget.scController.position.pixels != 0 && widget.scController.position.atEdge) {
       _loadMoreProjects();
     }
   }
 
   Future<void> _loadMoreProjects() async {
     if (widget.current <= widget.proj_mng.available_pages) {
-      
-      List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current) as List<Proyecto>;
-      print(newProjects);
-      if (newProjects.isNotEmpty) {
-        setState(() {
-          if (proj_mng is NetFilterProjects){
-            widget.projects = newProjects;
-          }else{
-            widget.projects.addAll(newProjects);
-          }
-          
-  
-          widget.current++;
-        });
+      final query = _searchController.text.toLowerCase();
+      if (query.isNotEmpty){
+        List<Proyecto> newProjects = await widget.filter_mng_students.get_page(widget.current) ;
+        
+        newProjects.addAll(await widget.filter_mng_tittle.get_page(widget.current));
+        if (newProjects.isNotEmpty) {
+          setState(() {
+            widget.projects.addAll(filtrar(newProjects));
+            widget.current ++;
+          });
+        }
       }
+      else{
+        List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current) as List<Proyecto>;
+        if (newProjects.isNotEmpty) {
+          setState(() {
+            widget.projects.addAll(filtrar(newProjects));
+            widget.current++;
+          });
+        }
+      }
+      
     }
   }
 

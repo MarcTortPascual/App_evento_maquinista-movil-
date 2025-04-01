@@ -10,15 +10,15 @@ class CarrouselImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 150.0,
+        height: 200.0,
         enlargeCenterPage: true,
-        aspectRatio: 16 / 9,
-        viewportFraction: 0.8,
+  
+        
       ),
       items: imgList.map((item) {
         return ClipRRect(
           //borderRadius: BorderRadius.circular(10.0), // Bordes redondeados
-          child: Image.network(
+          child: Image.asset(
             item,
             fit: BoxFit.cover,
             width: double.infinity,

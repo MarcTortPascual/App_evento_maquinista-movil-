@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_maquinista/custom_widgets/pop_up_speaker_card.dart';
 import 'package:app_maquinista/model/net/net_monlautech.dart';
 import 'package:app_maquinista/project_individual_layout.dart';
 
