@@ -67,14 +67,10 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: ListWheelScrollView.useDelegate(
-                itemExtent: 250, // Altura de cada elemento
-                perspective: 0.003,
-                physics: FixedExtentScrollPhysics(
-                  parent: BouncingScrollPhysics(), // Efecto de rebote
-                ),
-                childDelegate: ListWheelChildLoopingListDelegate(
-                  children: widget.companies.map((company) {
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: companies.length,
+                  itemBuilder: (context, index) {
                     return Card(
                       margin: const EdgeInsets.all(12),
                       elevation: 8,
@@ -87,7 +83,7 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.network(
-                              company.img_url,
+                              companies[index].img_url,
                               height: 120,
                               width: 120,
                               fit: BoxFit.cover,
@@ -97,7 +93,7 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                               height: 10,
                               width: MediaQuery.of(context).size.width * 0.78),
                           Text(
-                            company.name,
+                            companies[index].name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -107,22 +103,21 @@ class _ExhibitorsLayout extends State<ExhibitorsLayout> {
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 child: AutoSizeText(
-                                  "Web: ${company.web}",
+                                  "Web: ${companies[index].web}",
                                   maxLines: 2,
                                   style: TextStyle(
                                     color: Colors.black,
                                   ),
                                 ),
-                                onTap: () => launchUrl(Uri.parse(company.web)),
+                                onTap: () => launchUrl(Uri.parse(companies[index].web)),
                               )),
                         ],
                       ),
                     );
-                  }).toList(),
-                ),
+                  })
               ),
             ),
-          ),
+
         ],
       ),
     )));

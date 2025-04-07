@@ -87,8 +87,9 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
         body: Center(
       child: Expanded(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Text(widget.project.Resumen),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text("Descripción del proyecto"),
+                Text(widget.project.Resumen),
         ElevatedButton(
             onPressed: _goToEvaluate, child: Text("Evaluar Proyecto"))
       ])),
@@ -112,9 +113,14 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
               itemBuilder: (context, index) {
                 return InkWell(
                     onTap: () {
-                      showDialog(context: context, builder: (BuildContext context) {
-                        return CvPdfView(url: widget.project.Autor[index].cvLink, /*index: index,*/);
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CvPdfView(
+                              url: widget.project.Autor[index]
+                                  .cvLink, /*index: index,*/
+                            );
+                          });
                     },
                     child: CVCard(
                       imagePath: widget.project.Autor[index].photoName,

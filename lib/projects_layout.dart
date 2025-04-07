@@ -222,8 +222,8 @@ class _ProjectsLayout extends State<ProjectsLayout>
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Buscar por titulo',
-                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'Buscar proyecto',
+                    //prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
