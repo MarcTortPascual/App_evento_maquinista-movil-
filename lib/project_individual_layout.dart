@@ -6,8 +6,6 @@ import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'custom_widgets/line_painter.dart';
-
 class ProjectIndividualLayout extends StatefulWidget {
   Proyecto project;
 
@@ -97,6 +95,7 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(widget.project.Titulo,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
                     ),
@@ -138,7 +137,6 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
             )
           ],
           ),
-
       ),
     ));
   }

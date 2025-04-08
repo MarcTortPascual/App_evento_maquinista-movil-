@@ -42,6 +42,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "GM Electromecánica",
     "GM Carrocería",
     "GM Motocicletas"
+    "Num. Tribunal"
   ];
   List<Proyecto> filteredProjects = [];
 
