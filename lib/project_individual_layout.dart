@@ -6,6 +6,8 @@ import 'package:app_maquinista/projectos_detalles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'custom_widgets/line_painter.dart';
+
 class ProjectIndividualLayout extends StatefulWidget {
   Proyecto project;
 
@@ -85,14 +87,59 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
   Widget _buildDetailsSection() {
     return Scaffold(
         body: Center(
-      child: Expanded(
+      child:
+      Expanded(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text("Descripción del proyecto"),
-                Text(widget.project.Resumen),
-        ElevatedButton(
-            onPressed: _goToEvaluate, child: Text("Evaluar Proyecto"))
-      ])),
+          Column(children: [
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.project.Titulo,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                    ),
+                  ],
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Descripción del proyecto",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.85),
+                    Text(widget.project.Resumen),
+                  ],
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Número de tribunal",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.85),
+                  Text(widget.project.Box),
+                ],
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+              child: ElevatedButton(onPressed: _goToEvaluate, child: Text("Evaluar Proyecto")),
+            )
+          ],
+          ),
+
+      ),
     ));
   }
 
