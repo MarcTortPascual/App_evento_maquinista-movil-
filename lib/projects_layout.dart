@@ -41,7 +41,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
     "GS Automoción",
     "GM Electromecánica",
     "GM Carrocería",
-    "GM Motocicletas"
+    "GM Motocicletas",
     "Num. Tribunal"
   ];
   List<Proyecto> filteredProjects = [];
@@ -51,7 +51,9 @@ class _ProjectsLayout extends State<ProjectsLayout>
   List<Proyecto> filtrar (List<Proyecto> prjs){
     if (_filterSelectOption != "Todos"){
       return prjs.where((test) => test.NivelEstudios == _filterSelectOption).toList();
-    }else{
+    } else if (_filterSelectOption != "Num. Tribunal") {
+      return prjs.where((test) => test.Box == _filterSelectOption).toList();
+    } else{
       return prjs;
     }
   }
@@ -78,7 +80,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
-  void _filterProjectos( ) async {
+  void _filterProjectos() async {
     final query = _searchController.text.toLowerCase();
     if (query.isNotEmpty){
       List<Proyecto> projs = [];
@@ -97,9 +99,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
       widget.current = 1;
       widget.proj_mng = widget.proj_all;
       widget.projects = widget.projects = filtrar(await widget.proj_mng.get_page(1) as List<Proyecto>);
-      
     }
-    
   }
 
   // Cargar más proyectos cuando se llega al final de la lista
