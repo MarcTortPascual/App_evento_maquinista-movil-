@@ -69,7 +69,7 @@ class Proyecto {
     project["title"] ?? " ",
     students,
     project["ubicationName"]??" ",
-    project["ubicationName"]??" ",
+    project["numTribunal"].toString() ??" ",
     project["specialization"]??" ",
     project["abstract"]??" ",
     "$server/storage/photos/"+(project['photoName']??" "),

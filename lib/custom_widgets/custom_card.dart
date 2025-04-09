@@ -25,21 +25,16 @@ class CustomCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [/*
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-            child: Image.network(imageUrl, height: 150, width: double.infinity, fit: BoxFit.cover),
-          ),*/
+        children: [
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                const SizedBox(height: 5),
+                SizedBox(height: 5, width: MediaQuery.of(context).size.width * 0.85),
                 Text(time, style: TextStyle(fontSize: 14, color: Colors.white)),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Text(description, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white),),
               ],
             ),

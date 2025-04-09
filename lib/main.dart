@@ -145,139 +145,131 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _homeScreen() {
-    return SafeArea(
+    return SingleChildScrollView(
       child: Center(
         child: Column(
           children: [
+            // Sección del video
             Row(
               children: [
                 Expanded(
                     child: Ytvideo(
-                  videoUrl: 'https://www.youtube.com/watch?v=pNFdHHJ4ut8',
-                  hide_control: true,
-                  is_muted: true,
-                ))
+                      videoUrl: 'https://www.youtube.com/watch?v=pNFdHHJ4ut8',
+                      hide_control: true,
+                      is_muted: true,
+                    )
+                )
               ],
             ),
-            Row(children: [
-              Expanded(
-                  child: TitleSection(
-                title: 'DESCUBRE TODOS LOS PROYECTOS',
-                subtitle: 'PROYECTOS',
-                onTitleTap: () {},
-                onSubtitleTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProjectsLayout(
-                          projects: projectos,
-                          proj_mng: proj_mng,
-                          monlauTech_mng: mont_mng,
-                          monlauTechPrj: testdinamicos,
-                        ),
-                      )
-                  );
-                },
-              ))
-            ]),
-            Row(children: [
-              CustomPaint(size: const Size(100, 10), painter: LinePainter())
-            ]),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 130, // Altura fija para el ListView horizontal
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: projectos.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProjectIndividualLayout(
-                                    project: projectos[index]),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              elevation: 4,
-                              child: Container(
-                                width: 250,
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      projectos[index].Titulo ??
-                                          "Título por defecto",
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      projectos[index].Autor[0].name ??
-                                          "Sin descripción",
-                                      style: const TextStyle(fontSize: 14),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
+
+            // Sección de proyectos
+            TitleSection(
+              title: 'DESCUBRE TODOS LOS PROYECTOS',
+              subtitle: 'PROYECTOS',
+              onTitleTap: () {},
+              onSubtitleTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProjectsLayout(
+                        projects: projectos,
+                        proj_mng: proj_mng,
+                        monlauTech_mng: mont_mng,
+                        monlauTechPrj: testdinamicos,
+                      ),
+                    )
+                );
+              },
             ),
             Row(children: [
               CustomPaint(size: const Size(100, 10), painter: LinePainter())
             ]),
-            Row(children: [
-              Expanded(
-                  child: TitleSection(
-                title: 'DESCUBRE LOS PONENTES',
-                subtitle: 'PONENTES',
-                onTitleTap: () {},
-                onSubtitleTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SpeakersLayout(ponencias: meets)
-                        ),
-                      );
-                  },
-              ))
-            ]),
-            Expanded(
+            // Lista horizontal de proyectos
+            SizedBox(
+              height: 130,
               child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: meets.length,
+                scrollDirection: Axis.horizontal,
+                itemCount: projectos.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      showDialog(context: context, builder: (BuildContext context) {
-                        return SpeakersPopUpCArd(speakers: meets[index].speakers[0]);
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProjectIndividualLayout(
+                              project: projectos[index]),
+                        ),
+                      );
                     },
-                    child: CustomCard(
-                        title: meets[index].name ?? "Título por defecto",
-                        time: meets[index].initTime ?? "00:00",
-                        imageUrl: "",
-                        description:
-                            meets[index].description ?? "Sin descripción"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 4,
+                        child: Container(
+                          width: 250,
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                projectos[index].Titulo ?? "Título por defecto",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                projectos[index].Autor[0].name ?? "Sin descripción",
+                                style: const TextStyle(fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
+            ),
+            Row(children: [
+              CustomPaint(size: const Size(100, 10), painter: LinePainter())
+            ]),
+            // Sección de ponentes
+            TitleSection(
+              title: 'DESCUBRE LOS PONENTES',
+              subtitle: 'PONENTES',
+              onTitleTap: () {},
+              onSubtitleTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SpeakersLayout(ponencias: meets)
+                  ),
+                );
+              },
+            ),
+
+            Column(
+              children: List.generate(meets.length, (index) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SpeakersPopUpCArd(speakers: meets[index].speakers[0]);
+                        }
+                    );
+                  },
+                  child: CustomCard(
+                      title: meets[index].name ?? "Título por defecto",
+                      time: meets[index].initTime ?? "00:00",
+                      imageUrl: "",
+                      description: meets[index].description ?? "Sin descripción"
+                  ),
+                );
+              }),
             ),
           ],
         ),

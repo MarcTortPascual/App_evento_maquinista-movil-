@@ -6,10 +6,7 @@ import 'package:app_maquinista/model/speakers.dart';
 import 'package:flutter/material.dart';
 
 class SpeakersLayout extends StatefulWidget {
-  SpeakersLayout({
-    super.key,
-    required this.ponencias
-    });
+  SpeakersLayout({super.key, required this.ponencias});
 
   List<Meetings> ponencias;
 
@@ -18,7 +15,6 @@ class SpeakersLayout extends StatefulWidget {
 }
 
 class _SpeakersLayout extends State<SpeakersLayout> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,22 +63,83 @@ class _SpeakersLayout extends State<SpeakersLayout> {
               ),
               Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: widget.ponencias.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          showDialog(context: context, builder: (BuildContext context) {
-                            return SpeakersPopUpCArd(speakers: widget.ponencias[index].speakers[0]);
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                itemCount: widget.ponencias.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SpeakersPopUpCArd(
+                                speakers: widget.ponencias[index].speakers[0]);
                           });
-                        },
-                        child:
-                        SpeakerCard(
-                            ponencia: widget.ponencias[index],
-                        ),
-                      );
                     },
-                  )),
+                    child: Container(
+                      width: 250,
+                      padding: const EdgeInsets.all(10.0),
+                      child: SpeakerCard(
+                        ponencia: widget.ponencias[index],
+                      ),
+                    ),
+                  );
+                },
+              )),
+              Padding(
+                padding: const EdgeInsets.only(left: 13.0, top: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 500,
+                            child: Text(
+                              "Pruebas Dinamicas",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17),
+                            ),
+                          ),
+                          const SizedBox(width: 110),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  CustomPaint(
+                    size: Size(100, 10),
+                    painter: LinePainter(),
+                  )
+                ],
+              ),
+              Expanded(
+                  child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                itemCount: widget.ponencias.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SpeakersPopUpCArd(
+                                speakers: widget.ponencias[index].speakers[0]);
+                          });
+                    },
+                    child: SpeakerCard(
+                      ponencia: widget.ponencias[index],
+                    ),
+                  );
+                },
+              ))
             ],
           ),
         ),

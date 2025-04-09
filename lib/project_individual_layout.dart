@@ -85,13 +85,59 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
   Widget _buildDetailsSection() {
     return Scaffold(
         body: Center(
-      child: Expanded(
+      child:
+      Expanded(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Text(widget.project.Resumen),
-        ElevatedButton(
-            onPressed: _goToEvaluate, child: Text("Evaluar Proyecto"))
-      ])),
+          Column(children: [
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.project.Titulo,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                    ),
+                  ],
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Descripción del proyecto",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.85),
+                    Text(widget.project.Resumen),
+                  ],
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Número de tribunal",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.85),
+                  Text(widget.project.Box),
+                ],
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 5.0, left: 5.0),
+              child: ElevatedButton(onPressed: _goToEvaluate, child: Text("Evaluar Proyecto")),
+            )
+          ],
+          ),
+      ),
     ));
   }
 
@@ -112,9 +158,14 @@ class _ProjectIndividualLayoutState extends State<ProjectIndividualLayout>
               itemBuilder: (context, index) {
                 return InkWell(
                     onTap: () {
-                      showDialog(context: context, builder: (BuildContext context) {
-                        return PDFview(url: widget.project.Autor[index].cvLink, /*index: index,*/);
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CvPdfView(
+                              url: widget.project.Autor[index]
+                                  .cvLink, /*index: index,*/
+                            );
+                          });
                     },
                     child: CVCard(
                       imagePath: widget.project.Autor[index].photoName,
