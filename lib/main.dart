@@ -63,10 +63,10 @@ List<DinamicTest> monlautech = [];
 List<Companies> companies = [];
 
 //Inicializamos las classes para cargar los datos
-NetProjects proj_mng = NetProjects(7, "projectsPages", "projects");
-NetMonalautech mont_mng = NetMonalautech(7);
-NetCompanies com_mng = NetCompanies(7);
-NetMeetings met_mng = NetMeetings(7);
+NetProjects proj_mng = NetProjects(10, "projectsPages", "projects");
+NetMonalautech mont_mng = NetMonalautech(10);
+NetCompanies com_mng = NetCompanies(70);
+NetMeetings met_mng = NetMeetings(10);
 
 //classe pricipal del widget del la pantalla de inicio
 class MyHomePage extends StatefulWidget {
@@ -154,11 +154,10 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                     child: Ytvideo(
-                      videoUrl: 'https://www.youtube.com/watch?v=pNFdHHJ4ut8',
-                      hide_control: true,
-                      is_muted: true,
-                    )
-                )
+                  videoUrl: 'https://youtu.be/O5OcIboxnkw',
+                  hide_control: true,
+                  is_muted: true,
+                ))
               ],
             ),
 

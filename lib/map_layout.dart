@@ -63,7 +63,16 @@ class _MapLayout extends State<MapLayout> {
           width: 500,
           height: 270,
           child:
-              Image.asset('assets/img/Plano.png'),
+              InteractiveViewer(
+             
+              panEnabled: true, // permite arrastrar
+              boundaryMargin: EdgeInsets.all(20),
+              minScale: 1.0,
+              maxScale: 4.0,
+              child: Image(image: AssetImage("assets/img/Plano.png")),
+              scaleEnabled: true,
+              
+            ),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(

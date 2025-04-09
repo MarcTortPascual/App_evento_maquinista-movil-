@@ -69,13 +69,13 @@ class Proyecto {
     project["title"] ?? " ",
     students,
     project["ubicationName"]??" ",
-    project["numTribunal"].toString() ??" ",
+    project["numTribunal"].toString(),
     project["specialization"]??" ",
     project["abstract"]??" ",
     "$server/storage/photos/"+(project['photoName']??" "),
     project['videoURL'],
     "$server/storage/pdfs/"+(project['pdfURL']??" "),
-    "$server/storage/photos/"+(project['photoName']??" "),
+    project['photoName']??" ",
     project["moodleURL"]
   );
 }

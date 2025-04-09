@@ -1,6 +1,7 @@
 import 'package:app_maquinista/main.dart';
 import 'package:app_maquinista/model/net/Netload.dart';
 import 'package:app_maquinista/model/net/net_filter_projects.dart';
+import 'package:app_maquinista/model/net/net_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:app_maquinista/model/projectos.dart';
 import 'package:app_maquinista/model/dinamicTest.dart';
@@ -8,7 +9,12 @@ import 'custom_widgets/project_cards.dart';
 import 'custom_widgets/line_painter.dart';
 import 'model/net/net_projects.dart';
 import 'project_individual_layout.dart';
-
+const Map<String,int>spe_idspe ={
+  "GS Automoción":4 ,
+  "GM Electromecánica":1,
+  "GM Carrocería" : 3,
+  "GM Motocicletas" : 2
+};
 class ProjectsLayout extends StatefulWidget {
   ProjectsLayout({
     super.key,
@@ -22,6 +28,7 @@ class ProjectsLayout extends StatefulWidget {
   NetProjects proj_all = NetProjects(0,"","");
   NetFilterProjects filter_mng_students = NetFilterProjects(7);
   NetFilterProjects filter_mng_tittle = NetFilterProjects(7);
+  NetFilterProjects filter_mng_course = NetFilterProjects(7);
   List<Proyecto> projects;
 
   Netload monlauTech_mng;
@@ -48,7 +55,9 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
+  
   List<Proyecto> filtrar (List<Proyecto> prjs){
+   
     if (_filterSelectOption != "Todos"){
       return prjs.where((test) => test.NivelEstudios == _filterSelectOption).toList();
     } else if (_filterSelectOption != "Num. Tribunal") {
@@ -64,7 +73,7 @@ class _ProjectsLayout extends State<ProjectsLayout>
 
     _tabController = TabController(length: 2, vsync: this);
     filteredProjects = widget.projects; // Inicializar con todos los proyectos
-    _searchController.addListener(()=>_filterProjectos());
+    _searchController.addListener(()=>_filterProjectos(widget.current));
    
     widget.scController.addListener(_onScroll);
   }
@@ -80,9 +89,9 @@ class _ProjectsLayout extends State<ProjectsLayout>
   }
 
   // Filtrar proyectos basados en el texto de búsqueda y el filtro seleccionado
-  void _filterProjectos() async {
+  void _filterProjectos(int page) async {
     final query = _searchController.text.toLowerCase();
-    if (query.isNotEmpty){
+    if (query.isNotEmpty && _filterSelectOption == "Todos"){
       List<Proyecto> projs = [];
       widget.current = 1;
       
@@ -90,48 +99,57 @@ class _ProjectsLayout extends State<ProjectsLayout>
       widget.filter_mng_students.value = query;
       widget.filter_mng_tittle.where = "title";
       widget.filter_mng_students.where = "student";
-      projs.addAll(await widget.filter_mng_tittle.get_page(1));
-      projs.addAll(await widget.filter_mng_students.get_page(1));
+      widget.filter_mng_course.where ="idSpecialization";
+      projs.addAll(await widget.filter_mng_tittle.get_page(page));
+      projs.addAll(await widget.filter_mng_students.get_page(page));
+      
+      setState(() {
+          widget.projects = projs;
+      });
+    }else if(query.isEmpty && _filterSelectOption != "Todos"){
+      
+      widget.filter_mng_course.where ="idSpecialization";
+      widget.filter_mng_course.value = spe_idspe[_filterSelectOption].toString();
+      List<Proyecto> a = await widget.filter_mng_course.get_page(page);
+      setState(() {
+        widget.projects = a;
+      });
+
+    }else if(query.isEmpty && _filterSelectOption == "Todos"){
+      List<Proyecto> a = await widget.proj_mng.get_page(widget.current) as List<Proyecto>;
+      setState(() {
+          widget.projects = a;
+      });
+    }else if (query.isNotEmpty && _filterSelectOption != "Todos"){
+      List<Proyecto> projs = [];
+      widget.current = 1;
+      
+      widget.filter_mng_tittle.value = query;
+      widget.filter_mng_students.value = query;
+      widget.filter_mng_tittle.where = "title";
+      widget.filter_mng_students.where = "student";
+      widget.filter_mng_course.where ="idSpecialization";
+      projs.addAll(await widget.filter_mng_tittle.get_page(page));
+      projs.addAll(await widget.filter_mng_students.get_page(page));
+      
       setState(() {
           widget.projects = filtrar(projs);
       });
-    }else{
-      widget.current = 1;
-      widget.proj_mng = widget.proj_all;
-      widget.projects = widget.projects = filtrar(await widget.proj_mng.get_page(1) as List<Proyecto>);
     }
   }
 
   // Cargar más proyectos cuando se llega al final de la lista
   void _onScroll() {
-    if (widget.scController.position.pixels != 0 && widget.scController.position.atEdge) {
+    /*widget.scController.position.pixels != 0 && widget.scController.position.atEdge */
+    if (widget.scController.position.pixels >= widget.scController.position.maxScrollExtent - 200) {
       _loadMoreProjects();
     }
   }
 
   Future<void> _loadMoreProjects() async {
     if (widget.current <= widget.proj_mng.available_pages) {
-      final query = _searchController.text.toLowerCase();
-      if (query.isNotEmpty){
-        List<Proyecto> newProjects = await widget.filter_mng_students.get_page(widget.current) ;
-        
-        newProjects.addAll(await widget.filter_mng_tittle.get_page(widget.current));
-        if (newProjects.isNotEmpty) {
-          setState(() {
-            widget.projects.addAll(filtrar(newProjects));
-            widget.current ++;
-          });
-        }
-      }
-      else{
-        List<Proyecto> newProjects = await widget.proj_mng.get_page(widget.current) as List<Proyecto>;
-        if (newProjects.isNotEmpty) {
-          setState(() {
-            widget.projects.addAll(filtrar(newProjects));
-            widget.current++;
-          });
-        }
-      }
+      _filterProjectos(widget.current);
+      widget.current ++;
       
     }
   }
@@ -196,8 +214,11 @@ class _ProjectsLayout extends State<ProjectsLayout>
                         onChanged: (String? newValue) {
                           setState(() {
                             _filterSelectOption = newValue!;
-                            _filterProjectos(); // Aplicar filtro cuando cambia la selección
+                        
+                            
                           });
+                          _filterProjectos(widget.current);
+                         
                         },
                         items: _filter.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
